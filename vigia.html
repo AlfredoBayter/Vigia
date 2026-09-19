@@ -1,0 +1,1384 @@
+<title>Vigía Colombia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    color-scheme: light;
+    --bg: #EEF1EF;
+    --page-edge: #E4E9E6;
+    --surface: #FFFFFF;
+    --surface-2: #F5F8F6;
+    --surface-3: #EAEFEC;
+    --ink: #131F27;
+    --ink-2: #4B5A61;
+    --muted: #7E8B87;
+    --accent: #24425E;
+    --accent-ink: #FFFFFF;
+    --accent-soft: #DDE6ED;
+    --accent-2: #B5652E;
+    --accent-2-soft: #F3E1D2;
+    --border: rgba(19,31,39,0.12);
+    --border-strong: rgba(19,31,39,0.22);
+    --shadow: 0 1px 2px rgba(19,31,39,0.06), 0 8px 24px -12px rgba(19,31,39,0.18);
+    --good: #0ca30c;
+    --warning: #c98500;
+    --serious: #ec835a;
+    --critical: #d03b3b;
+    --good-soft: #DCEFD9;
+    --warning-soft: #FBEBCB;
+    --serious-soft: #FBE1D5;
+    --critical-soft: #F5D6D6;
+    --font-display: "Fraunces", Georgia, serif;
+    --font-body: "Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      color-scheme: dark;
+      --bg: #10161A;
+      --page-edge: #0B1013;
+      --surface: #172128;
+      --surface-2: #1B262D;
+      --surface-3: #202C33;
+      --ink: #EEF3F2;
+      --ink-2: #B9C6C2;
+      --muted: #82918D;
+      --accent: #7FA8CB;
+      --accent-ink: #0B1013;
+      --accent-soft: #23384A;
+      --accent-2: #E0925A;
+      --accent-2-soft: #3B2A20;
+      --border: rgba(238,243,242,0.12);
+      --border-strong: rgba(238,243,242,0.24);
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 28px -12px rgba(0,0,0,0.55);
+      --good: #2fbf2f;
+      --warning: #e0a530;
+      --serious: #ec835a;
+      --critical: #e2605f;
+      --good-soft: #16311A;
+      --warning-soft: #3A2E12;
+      --serious-soft: #3A2118;
+      --critical-soft: #3D1B1B;
+    }
+  }
+  :root[data-theme="dark"]{
+    color-scheme: dark;
+    --bg: #10161A;
+    --page-edge: #0B1013;
+    --surface: #172128;
+    --surface-2: #1B262D;
+    --surface-3: #202C33;
+    --ink: #EEF3F2;
+    --ink-2: #B9C6C2;
+    --muted: #82918D;
+    --accent: #7FA8CB;
+    --accent-ink: #0B1013;
+    --accent-soft: #23384A;
+    --accent-2: #E0925A;
+    --accent-2-soft: #3B2A20;
+    --border: rgba(238,243,242,0.12);
+    --border-strong: rgba(238,243,242,0.24);
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 28px -12px rgba(0,0,0,0.55);
+    --good: #2fbf2f;
+    --warning: #e0a530;
+    --serious: #ec835a;
+    --critical: #e2605f;
+    --good-soft: #16311A;
+    --warning-soft: #3A2E12;
+    --serious-soft: #3A2118;
+    --critical-soft: #3D1B1B;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--font-body);
+    font-size:15px;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{font-family:var(--font-display); text-wrap:balance; margin:0; color:var(--ink);}
+  .mono{font-family:var(--font-mono); font-variant-numeric:tabular-nums;}
+  a{color:var(--accent);}
+  button{font-family:inherit;}
+
+  .shell{max-width:1280px; margin:0 auto; padding:0 24px 64px;}
+
+  /* ---------- Masthead ---------- */
+  header.masthead{
+    background:var(--surface);
+    border-bottom:1px solid var(--border);
+  }
+  .masthead-top{
+    max-width:1280px; margin:0 auto; padding:22px 24px 18px;
+    display:flex; align-items:flex-start; justify-content:space-between; gap:24px; flex-wrap:wrap;
+  }
+  .brand{display:flex; align-items:center; gap:14px;}
+  .brand-mark{width:44px; height:44px; flex:none;}
+  .brand-text h1{font-size:26px; font-weight:600; letter-spacing:0.2px;}
+  .brand-text p{margin:2px 0 0; color:var(--ink-2); font-size:13.5px; max-width:46ch;}
+  .masthead-meta{
+    display:flex; gap:22px; align-items:center; flex-wrap:wrap;
+  }
+  .meta-stat{text-align:right;}
+  .meta-stat .n{display:block; font-family:var(--font-mono); font-size:20px; font-weight:600; color:var(--accent);}
+  .meta-stat .l{display:block; font-size:11.5px; color:var(--muted); text-transform:uppercase; letter-spacing:0.06em; margin-top:1px;}
+  .theme-toggle{
+    border:1px solid var(--border-strong); background:var(--surface-2); color:var(--ink-2);
+    border-radius:8px; padding:7px 10px; font-size:12.5px; cursor:pointer;
+  }
+
+  nav.hazard-tabs{
+    max-width:1280px; margin:0 auto; padding:0 24px;
+    display:flex; gap:6px; overflow-x:auto; scrollbar-width:none;
+  }
+  nav.hazard-tabs::-webkit-scrollbar{display:none;}
+  .tab{
+    display:flex; align-items:center; gap:8px;
+    padding:12px 14px 13px; border:none; background:transparent; cursor:pointer;
+    color:var(--ink-2); font-size:13.5px; font-weight:600; white-space:nowrap;
+    border-bottom:3px solid transparent; margin-bottom:-1px;
+    transition:color .15s ease, border-color .15s ease;
+  }
+  .tab svg{width:18px; height:18px; flex:none;}
+  .tab:hover{color:var(--ink);}
+  .tab.active{color:var(--accent); border-bottom-color:var(--accent);}
+
+  /* ---------- Layout ---------- */
+  .layout{
+    display:grid; grid-template-columns: 1.35fr 1fr; gap:20px;
+    margin-top:22px; align-items:start;
+  }
+  @media (max-width: 900px){ .layout{grid-template-columns:1fr;} }
+
+  .panel{
+    background:var(--surface); border:1px solid var(--border); border-radius:14px;
+    box-shadow:var(--shadow);
+  }
+  .panel-head{
+    padding:16px 18px 12px; display:flex; align-items:baseline; justify-content:space-between; gap:12px; flex-wrap:wrap;
+    border-bottom:1px solid var(--border);
+  }
+  .panel-head h2{font-size:16px; font-weight:600;}
+  .panel-head .hint{font-size:12px; color:var(--muted);}
+  .panel-body{padding:16px 18px 18px;}
+
+  /* legend */
+  .legend{display:flex; gap:14px; flex-wrap:wrap; align-items:center; font-size:12px; color:var(--ink-2);}
+  .legend .sw{display:inline-flex; align-items:center; gap:6px;}
+  .legend .dot{width:10px; height:10px; border-radius:3px; display:inline-block;}
+
+  /* region map grid */
+  .region-group{margin-bottom:16px;}
+  .region-group:last-child{margin-bottom:0;}
+  .region-title{
+    font-size:11.5px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted);
+    margin:0 0 8px; font-weight:600;
+  }
+  .dept-grid{
+    display:grid; grid-template-columns:repeat(auto-fill, minmax(108px, 1fr)); gap:7px;
+  }
+  .dept-tile{
+    border:1px solid var(--border); border-radius:9px; padding:9px 10px;
+    cursor:pointer; text-align:left; background:var(--surface-2);
+    display:flex; flex-direction:column; gap:6px; min-height:64px;
+    transition:transform .1s ease, border-color .12s ease, box-shadow .12s ease;
+    position:relative;
+  }
+  .dept-tile:hover{border-color:var(--border-strong); transform:translateY(-1px);}
+  .dept-tile.selected{border-color:var(--accent); box-shadow:0 0 0 2px var(--accent-soft) inset;}
+  .dept-tile .name{font-size:12.5px; font-weight:600; line-height:1.25; color:var(--ink);}
+  .dept-tile .bar-track{height:6px; border-radius:4px; background:var(--surface-3); overflow:hidden;}
+  .dept-tile .bar-fill{height:100%; border-radius:4px;}
+  .dept-tile .lvl{font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em;}
+
+  /* detail panel */
+  .dept-heading{display:flex; align-items:baseline; justify-content:space-between; gap:10px; flex-wrap:wrap;}
+  .dept-heading h3{font-size:20px; font-weight:600;}
+  .dept-heading .region-chip{
+    font-size:11px; color:var(--ink-2); background:var(--surface-3); padding:3px 9px; border-radius:99px;
+    border:1px solid var(--border);
+  }
+  .dept-heading .ml-chip{
+    background:var(--surface-2); font-weight:600; display:inline-flex; align-items:center; gap:6px; cursor:help;
+  }
+  .dept-heading .ml-chip .dot{width:8px; height:8px; border-radius:99px; display:inline-block;}
+  .stat-row{display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin:14px 0 16px;}
+  @media (max-width:520px){ .stat-row{grid-template-columns:repeat(2,1fr);} }
+  .stat-tile{background:var(--surface-2); border:1px solid var(--border); border-radius:10px; padding:10px 12px;}
+  .stat-tile .l{font-size:10.5px; text-transform:uppercase; letter-spacing:.05em; color:var(--muted);}
+  .stat-tile .v{font-family:var(--font-mono); font-size:20px; font-weight:700; margin-top:3px;}
+  .stat-tile .v small{font-family:var(--font-body); font-size:11px; font-weight:600; color:var(--ink-2); margin-left:4px;}
+
+  .badge{
+    display:inline-flex; align-items:center; gap:5px; padding:3px 10px; border-radius:99px;
+    font-size:11.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em;
+  }
+  .badge::before{content:""; width:7px; height:7px; border-radius:99px; background:currentColor;}
+  .lvl-1{color:var(--good); background:var(--good-soft);}
+  .lvl-2{color:var(--warning); background:var(--warning-soft);}
+  .lvl-3{color:var(--serious); background:var(--serious-soft);}
+  .lvl-4{color:var(--critical); background:var(--critical-soft);}
+
+  /* hazard bar chart */
+  .hbar-chart{display:flex; flex-direction:column; gap:10px; margin-top:6px;}
+  .hbar-row{display:grid; grid-template-columns:120px 1fr 74px; align-items:center; gap:10px;}
+  .hbar-label{display:flex; align-items:center; gap:7px; font-size:12.5px; font-weight:600; color:var(--ink-2);}
+  .hbar-label svg{width:15px; height:15px; flex:none; color:var(--ink-2);}
+  .hbar-track{display:block; height:10px; background:var(--surface-3); border-radius:5px; overflow:hidden; border:1px solid var(--border);}
+  .hbar-fill{display:block; height:100%; border-radius:5px 2px 2px 5px; transition:width .4s ease;}
+  .hbar-val{font-size:11.5px; font-weight:700; text-align:right; text-transform:uppercase; letter-spacing:.02em;}
+
+  /* weights */
+  .weights{display:flex; flex-direction:column; gap:9px; margin-top:4px;}
+  .weight-row{display:grid; grid-template-columns:110px 1fr 34px; align-items:center; gap:8px; font-size:12px; color:var(--ink-2);}
+  .weight-row input[type=range]{width:100%; accent-color:var(--accent);}
+  .weight-row .wv{font-family:var(--font-mono); text-align:right; font-size:11.5px;}
+
+  /* magnitude gauge */
+  .gauge-wrap{display:flex; align-items:center; gap:16px; margin-top:10px;}
+  .gauge{width:118px; height:66px; flex:none;}
+  .gauge-readout .cls{font-family:var(--font-display); font-size:22px; font-weight:600;}
+  .gauge-readout .desc{font-size:12px; color:var(--ink-2); margin-top:2px; max-width:32ch;}
+  details.method{margin-top:12px;}
+  details.method summary{cursor:pointer; font-size:12px; color:var(--accent); font-weight:600; list-style:none;}
+  details.method summary::-webkit-details-marker{display:none;}
+  details.method .m-body{font-size:12.5px; color:var(--ink-2); margin-top:8px; line-height:1.55;}
+  details.method .m-body code{font-family:var(--font-mono); background:var(--surface-2); padding:1px 5px; border-radius:4px; font-size:11.5px;}
+
+  /* recommendations */
+  .rec-tabs{display:flex; gap:6px; margin-bottom:12px;}
+  .rec-tab{
+    flex:1; padding:8px 10px; border-radius:8px; border:1px solid var(--border);
+    background:var(--surface-2); color:var(--ink-2); font-size:12.5px; font-weight:700; cursor:pointer;
+    text-transform:uppercase; letter-spacing:.03em;
+  }
+  .rec-tab.active{background:var(--accent); color:var(--accent-ink); border-color:var(--accent);}
+  .rec-list{margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:9px;}
+  .rec-list li{
+    display:flex; gap:9px; font-size:13px; color:var(--ink); line-height:1.5;
+    padding-bottom:9px; border-bottom:1px solid var(--border);
+  }
+  .rec-list li:last-child{border-bottom:none; padding-bottom:0;}
+  .rec-list li .num{
+    font-family:var(--font-mono); font-size:11px; color:var(--muted); flex:none; padding-top:2px; width:16px;
+  }
+
+  /* simulation panel */
+  .sim-panel{margin-top:20px;}
+  .sim-layout{display:grid; grid-template-columns:1fr 300px; gap:18px;}
+  @media (max-width:900px){.sim-layout{grid-template-columns:1fr;}}
+  .sim-canvas-wrap{
+    background:var(--surface-2); border:1px solid var(--border); border-radius:10px;
+    overflow:hidden; position:relative;
+  }
+  canvas#simCanvas{width:100%; height:340px; display:block;}
+  .sim-controls{display:flex; gap:8px; padding:10px 12px; border-top:1px solid var(--border); align-items:center; flex-wrap:wrap;}
+  .btn{
+    border:1px solid var(--border-strong); background:var(--surface); color:var(--ink);
+    padding:7px 13px; border-radius:8px; font-size:12.5px; font-weight:600; cursor:pointer;
+  }
+  .btn.primary{background:var(--accent); color:var(--accent-ink); border-color:var(--accent);}
+  .btn:disabled{opacity:.5; cursor:not-allowed;}
+  .sim-note{font-size:11.5px; color:var(--muted); margin-left:auto; max-width:38ch; text-align:right;}
+  .sim-caption{font-size:12.5px; color:var(--ink-2); margin-top:10px; line-height:1.55;}
+  .sim-caption b{color:var(--ink);}
+
+  .sim-side h4{font-size:12px; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); margin:0 0 8px; font-weight:700;}
+  .analog-card{
+    background:var(--surface-2); border:1px solid var(--border); border-radius:10px; padding:11px 12px; margin-bottom:9px;
+  }
+  .analog-card .h{display:flex; justify-content:space-between; font-size:12.5px; font-weight:700;}
+  .analog-card .d{font-size:11.5px; color:var(--ink-2); margin-top:3px;}
+
+  /* methodology / sources */
+  .meth-grid{display:grid; grid-template-columns:1.1fr .9fr; gap:20px; margin-top:20px;}
+  @media (max-width:900px){.meth-grid{grid-template-columns:1fr;}}
+  .meth-grid h3{font-size:15px; margin-bottom:8px;}
+  .meth-grid p{font-size:13px; color:var(--ink-2); line-height:1.6; margin:0 0 10px;}
+  .src-list{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:8px;}
+  .src-list li{font-size:12.5px; color:var(--ink-2); padding-left:14px; position:relative; line-height:1.5;}
+  .src-list li::before{content:"—"; position:absolute; left:0; color:var(--muted);}
+  .src-list a{text-decoration:none; font-weight:600;}
+  .src-list a:hover{text-decoration:underline;}
+
+  footer.site{margin-top:30px; padding-top:18px; border-top:1px solid var(--border); font-size:11.5px; color:var(--muted); display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;}
+
+  /* arquitectura */
+  #archText p{font-size:13px; color:var(--ink-2); line-height:1.6; margin:0 0 12px;}
+  #archText p:last-child{margin-bottom:0;}
+  #archText b{color:var(--ink);}
+
+  /* panel de ML (K-Means) */
+  #mlText > p{font-size:13px; color:var(--ink-2); line-height:1.6; margin:0 0 12px;}
+  #mlText b{color:var(--ink);}
+  .elbow-pt{display:inline-block; font-size:11px; color:var(--muted); margin-right:12px; font-family:var(--font-mono);}
+  .elbow-pt b{color:var(--ink-2); font-family:var(--font-mono);}
+  .elbow-pt.current{color:var(--accent-2);}
+  .elbow-pt.current b{color:var(--accent-2);}
+  .ml-clusters{display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin:4px 0 14px;}
+  @media (max-width:640px){ .ml-clusters{grid-template-columns:1fr;} }
+  .ml-cluster-card{background:var(--surface-2); border:1px solid var(--border); border-radius:10px; padding:12px 14px;}
+  .ml-cluster-head{display:flex; align-items:center; gap:7px; font-size:13px;}
+  .ml-cluster-head .dot{width:9px; height:9px; border-radius:99px; flex-shrink:0;}
+  .ml-cluster-head .muted-n{color:var(--muted); font-weight:400; font-size:11.5px;}
+  .ml-cluster-label{font-size:12.5px; color:var(--ink-2); margin:5px 0 6px; font-style:italic;}
+  .ml-cluster-members{font-size:11.5px; color:var(--muted); line-height:1.5;}
+
+  /* tabla de datos completa */
+  .data-table-wrap{overflow-x:auto; border:1px solid var(--border); border-radius:10px;}
+  table.data-table{border-collapse:collapse; width:100%; min-width:760px; font-size:12px;}
+  table.data-table th{
+    background:var(--surface-2); color:var(--ink-2); text-align:left; font-weight:700;
+    padding:8px 10px; border-bottom:1px solid var(--border); white-space:nowrap;
+    text-transform:uppercase; letter-spacing:.03em; font-size:10.5px; position:sticky; top:0;
+  }
+  table.data-table td{padding:7px 10px; border-bottom:1px solid var(--border); white-space:nowrap;}
+  table.data-table td.dt-name{font-weight:600; color:var(--ink);}
+  table.data-table tbody tr:hover{background:var(--surface-2);}
+  .data-table-note{font-size:11.5px; color:var(--muted); margin:10px 2px 0;}
+
+  /* mapa real de Colombia (choropleth) */
+  .geo-map-wrap{position:relative;}
+  .geo-map-wrap svg{width:100%; height:auto; display:block;}
+  .geo-path{stroke:var(--surface); stroke-width:1.1; cursor:pointer; transition:filter .12s ease, stroke-width .12s ease;}
+  .geo-path:hover{filter:brightness(1.08);}
+  .geo-path.selected{stroke:var(--accent); stroke-width:2.6;}
+  .inset-label{font-size:8.5px; fill:var(--muted); font-family:var(--font-body);}
+  .map-tooltip{
+    position:absolute; pointer-events:none; opacity:0; transition:opacity .08s ease;
+    background:var(--ink); color:var(--bg); font-size:11.5px; line-height:1.4;
+    padding:5px 9px; border-radius:7px; z-index:5; white-space:nowrap;
+    box-shadow:0 4px 14px rgba(0,0,0,0.25);
+  }
+  .map-tooltip b{display:block; font-size:12px;}
+</style>
+
+<header class="masthead">
+  <div class="masthead-top">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 44 44" fill="none">
+        <circle cx="22" cy="22" r="21" stroke="var(--accent)" stroke-width="1.4" opacity="0.35"/>
+        <circle cx="22" cy="22" r="14.5" stroke="var(--accent)" stroke-width="1.4" opacity="0.55"/>
+        <path d="M22 8 L22 36 M8 22 L36 22" stroke="var(--accent)" stroke-width="1" opacity="0.4"/>
+        <path d="M12 27 L18 17 L23 23 L28 14 L33 20" stroke="var(--accent-2)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <circle cx="33" cy="20" r="2.6" fill="var(--accent-2)"/>
+      </svg>
+      <div class="brand-text">
+        <h1>Vigía Colombia</h1>
+        <p>Monitoreo, predicción y simulación de riesgo de desastres naturales por departamento — construido sobre datos oficiales de UNGRD, SGC, IDEAM y DNP.</p>
+      </div>
+    </div>
+    <div class="masthead-meta">
+      <div class="meta-stat"><span class="n mono">33</span><span class="l">Unidades territoriales</span></div>
+      <div class="meta-stat"><span class="n mono">5</span><span class="l">Amenazas modeladas</span></div>
+      <div class="meta-stat"><span class="n mono">83%</span><span class="l">Pob. en zona sísmica alta/media</span></div>
+      <button class="theme-toggle" id="themeToggle" type="button">Tema: automático</button>
+    </div>
+  </div>
+  <nav class="hazard-tabs" id="hazardTabs"></nav>
+</header>
+
+<div class="shell">
+
+  <section class="layout">
+    <div class="panel" id="mapPanel">
+      <div class="panel-head">
+        <h2 id="mapTitle">Amenaza sísmica por departamento</h2>
+        <span class="legend" id="mapLegend"></span>
+      </div>
+      <div class="panel-body" id="mapBody"></div>
+    </div>
+
+    <div class="panel" id="detailPanel">
+      <div class="panel-head">
+        <h2>Ficha departamental</h2>
+        <span class="hint">Seleccione un departamento en el mapa</span>
+      </div>
+      <div class="panel-body" id="detailBody"></div>
+    </div>
+  </section>
+
+  <section class="panel sim-panel" id="simPanel">
+    <div class="panel-head">
+      <h2>Simulación de escenario</h2>
+      <span class="hint">Visualización animada parametrizada con los niveles de amenaza reales del departamento seleccionado — no es un modelo físico validado</span>
+    </div>
+    <div class="panel-body">
+      <div class="sim-layout">
+        <div>
+          <div class="sim-canvas-wrap">
+            <canvas id="simCanvas" width="800" height="340"></canvas>
+            <div class="sim-controls">
+              <button class="btn primary" id="simPlay">▶ Reproducir</button>
+              <button class="btn" id="simReset">⟲ Reiniciar</button>
+              <span class="sim-note" id="simNote">Seleccione un departamento para calibrar la simulación con su nivel de amenaza.</span>
+            </div>
+          </div>
+          <p class="sim-caption" id="simCaption"></p>
+        </div>
+        <div class="sim-side">
+          <h4>Predicción de magnitud</h4>
+          <div id="magBlock"></div>
+          <h4 style="margin-top:16px;">Análogos históricos</h4>
+          <div id="analogBlock"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel" id="recPanel" style="margin-top:20px;">
+    <div class="panel-head">
+      <h2 id="recTitle">Recomendaciones — Sismo</h2>
+      <span class="hint">Basadas en lineamientos públicos de UNGRD y Cruz Roja Colombiana</span>
+    </div>
+    <div class="panel-body">
+      <div class="rec-tabs" id="recTabs"></div>
+      <ol class="rec-list" id="recList"></ol>
+    </div>
+  </section>
+
+  <section class="meth-grid">
+    <div>
+      <h3>Metodología</h3>
+      <p id="methText"></p>
+      <details class="method" open>
+        <summary>Ver fórmulas y escalas</summary>
+        <div class="m-body" id="methFormulas"></div>
+      </details>
+    </div>
+    <div>
+      <h3>Fuentes de datos reales</h3>
+      <ul class="src-list" id="sourceList"></ul>
+    </div>
+  </section>
+
+  <section class="panel" id="archPanel" style="margin-top:20px;">
+    <div class="panel-head">
+      <h2>Arquitectura de la solución y modelos de IA</h2>
+      <span class="hint">Transparencia técnica: qué hay (y qué no) detrás de cada número</span>
+    </div>
+    <div class="panel-body" id="archText"></div>
+  </section>
+
+  <section class="panel" id="mlPanel" style="margin-top:20px;">
+    <div class="panel-head">
+      <h2>Modelo de aprendizaje automático: arquetipos de riesgo (K-Means)</h2>
+      <span class="hint">El único componente de la plataforma que es, en sentido estricto, un modelo de ML — no una fórmula de índice</span>
+    </div>
+    <div class="panel-body" id="mlText"></div>
+  </section>
+
+  <section class="panel" id="dataPanel" style="margin-top:20px;">
+    <div class="panel-head">
+      <h2>Conjunto de datos completo</h2>
+      <span class="hint">Las 33 unidades territoriales con todas las variables usadas por la plataforma</span>
+    </div>
+    <div class="panel-body" id="dataTableBox"></div>
+  </section>
+
+  <footer class="site">
+    <span>Vigía Colombia — prototipo académico. Los índices son ilustrativos y no sustituyen los productos oficiales de UNGRD, SGC ni IDEAM.</span>
+    <span>Construido para acompañar el artículo científico «Un índice compuesto y explicable para la evaluación del riesgo de desastres naturales en Colombia»</span>
+    <span>Presentado por: Giovanny Angulo, Alfredo Bayter, José Berrío, Elías Fuentes y María Ricaurte</span>
+  </footer>
+</div>
+
+<script>
+/* ======================================================================
+   VIGÍA COLOMBIA — dataset y lógica del prototipo
+   Los niveles por amenaza (1=Bajo .. 4=Muy alto) son una codificación
+   ilustrativa derivada de fuentes oficiales citadas en el panel de
+   metodología (SGC, UNGRD, IDEAM, DNP). No reemplazan un mapa de amenaza
+   oficial y se documentan como tales en el artículo que acompaña este
+   prototipo.
+   ====================================================================== */
+
+const LEVELS = {
+  1: {label:"Bajo",     css:"lvl-1", color:"var(--good)"},
+  2: {label:"Medio",    css:"lvl-2", color:"var(--warning)"},
+  3: {label:"Alto",     css:"lvl-3", color:"var(--serious)"},
+  4: {label:"Muy alto", css:"lvl-4", color:"var(--critical)"},
+};
+
+const ICONS = {
+  sismo: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 17h3l2-6 3 10 3-14 2 8 2-4h5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  inundacion: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 9c1.5-1.5 3-1.5 4.5 0s3 1.5 4.5 0 3-1.5 4.5 0 3 1.5 4.5 0" stroke-linecap="round"/><path d="M2 15c1.5-1.5 3-1.5 4.5 0s3 1.5 4.5 0 3-1.5 4.5 0 3 1.5 4.5 0" stroke-linecap="round"/><path d="M2 21c1.5-1.5 3-1.5 4.5 0s3 1.5 4.5 0 3-1.5 4.5 0 3 1.5 4.5 0" stroke-linecap="round"/></svg>',
+  deslizamiento: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 20 L9 8 L13 14 L17 6 L22 20" stroke-linecap="round" stroke-linejoin="round"/><circle cx="17" cy="6" r="1.6" fill="currentColor" stroke="none"/></svg>',
+  volcanico: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 20 L9 8 L12 13 L15 8 L21 20 Z" stroke-linejoin="round"/><path d="M11 3c.5 1 .3 1.7-.2 2.4-.6.8-.4 1.6.3 2" stroke-linecap="round"/></svg>',
+  incendio: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21c4 0 6-2.5 6-6 0-3-2-4.5-2.5-7-1 1.5-1.5 2-2.5 2 .5-3-1-5.5-3-7 .3 3-1 4-2.5 6C6 11 6 13 6 15c0 3.5 2 6 6 6Z" stroke-linejoin="round"/></svg>',
+};
+
+const HAZARDS = [
+  {id:"sismo", label:"Sismo", unit:"amenaza sísmica", source:"SGC"},
+  {id:"inundacion", label:"Inundación", unit:"amenaza por inundación", source:"IDEAM / UNGRD"},
+  {id:"deslizamiento", label:"Deslizamiento", unit:"movimientos en masa", source:"SGC / UNGRD"},
+  {id:"volcanico", label:"Volcánico", unit:"amenaza volcánica", source:"SGC"},
+  {id:"incendio", label:"Incendio forestal", unit:"amenaza de incendio forestal", source:"IDEAM"},
+];
+
+// population: miles de habitantes (orden de magnitud, DANE — proyecciones, valores redondeados con fines ilustrativos)
+// exposicion: nivel ordinal 1-4 derivado de la población del departamento (proxy de exposición poblacional, cuartiles aproximados)
+const DEPARTMENTS = [
+  // --- Caribe ---
+  {name:"Atlántico", region:"Caribe", population:2700, vulnerability:2, exposicion:3, hazards:{sismo:2, inundacion:4, deslizamiento:1, volcanico:1, incendio:1}},
+  {name:"Bolívar", region:"Caribe", population:2200, vulnerability:3, exposicion:3, hazards:{sismo:2, inundacion:4, deslizamiento:1, volcanico:1, incendio:1}},
+  {name:"Cesar", region:"Caribe", population:1100, vulnerability:3, exposicion:2, hazards:{sismo:2, inundacion:3, deslizamiento:1, volcanico:1, incendio:3}},
+  {name:"Córdoba", region:"Caribe", population:1800, vulnerability:3, exposicion:3, hazards:{sismo:2, inundacion:4, deslizamiento:1, volcanico:1, incendio:1}},
+  {name:"La Guajira", region:"Caribe", population:900, vulnerability:4, exposicion:2, hazards:{sismo:2, inundacion:3, deslizamiento:1, volcanico:1, incendio:3}},
+  {name:"Magdalena", region:"Caribe", population:1300, vulnerability:3, exposicion:2, hazards:{sismo:2, inundacion:4, deslizamiento:1, volcanico:1, incendio:3}},
+  {name:"Sucre", region:"Caribe", population:900, vulnerability:3, exposicion:2, hazards:{sismo:2, inundacion:4, deslizamiento:1, volcanico:1, incendio:1}},
+  // --- Andina ---
+  {name:"Antioquia", region:"Andina", population:6700, vulnerability:1, exposicion:4, hazards:{sismo:3, inundacion:2, deslizamiento:4, volcanico:1, incendio:3}},
+  {name:"Bogotá D.C.", region:"Andina", population:7800, vulnerability:1, exposicion:4, hazards:{sismo:3, inundacion:1, deslizamiento:1, volcanico:1, incendio:3}},
+  {name:"Boyacá", region:"Andina", population:1200, vulnerability:2, exposicion:2, hazards:{sismo:3, inundacion:2, deslizamiento:3, volcanico:1, incendio:4}},
+  {name:"Caldas", region:"Andina", population:1000, vulnerability:1, exposicion:2, hazards:{sismo:4, inundacion:1, deslizamiento:2, volcanico:4, incendio:1}},
+  {name:"Cundinamarca", region:"Andina", population:3200, vulnerability:2, exposicion:4, hazards:{sismo:3, inundacion:3, deslizamiento:4, volcanico:1, incendio:4}},
+  {name:"Huila", region:"Andina", population:1100, vulnerability:2, exposicion:2, hazards:{sismo:3, inundacion:2, deslizamiento:2, volcanico:3, incendio:1}},
+  {name:"Norte de Santander", region:"Andina", population:1500, vulnerability:3, exposicion:3, hazards:{sismo:4, inundacion:3, deslizamiento:2, volcanico:1, incendio:3}},
+  {name:"Quindío", region:"Andina", population:560, vulnerability:1, exposicion:1, hazards:{sismo:4, inundacion:1, deslizamiento:2, volcanico:3, incendio:1}},
+  {name:"Risaralda", region:"Andina", population:950, vulnerability:1, exposicion:2, hazards:{sismo:4, inundacion:1, deslizamiento:3, volcanico:3, incendio:1}},
+  {name:"Santander", region:"Andina", population:2300, vulnerability:1, exposicion:3, hazards:{sismo:4, inundacion:2, deslizamiento:3, volcanico:1, incendio:4}},
+  {name:"Tolima", region:"Andina", population:1400, vulnerability:2, exposicion:3, hazards:{sismo:3, inundacion:2, deslizamiento:3, volcanico:4, incendio:3}},
+  // --- Pacífica ---
+  {name:"Cauca", region:"Pacífica", population:1400, vulnerability:3, exposicion:3, hazards:{sismo:4, inundacion:3, deslizamiento:3, volcanico:3, incendio:1}},
+  {name:"Chocó", region:"Pacífica", population:530, vulnerability:4, exposicion:1, hazards:{sismo:4, inundacion:4, deslizamiento:2, volcanico:1, incendio:1}},
+  {name:"Nariño", region:"Pacífica", population:1800, vulnerability:3, exposicion:3, hazards:{sismo:4, inundacion:3, deslizamiento:4, volcanico:4, incendio:1}},
+  {name:"Valle del Cauca", region:"Pacífica", population:4500, vulnerability:1, exposicion:4, hazards:{sismo:4, inundacion:3, deslizamiento:3, volcanico:1, incendio:1}},
+  // --- Orinoquía ---
+  {name:"Arauca", region:"Orinoquía", population:260, vulnerability:3, exposicion:1, hazards:{sismo:1, inundacion:4, deslizamiento:1, volcanico:1, incendio:3}},
+  {name:"Casanare", region:"Orinoquía", population:420, vulnerability:2, exposicion:1, hazards:{sismo:1, inundacion:4, deslizamiento:1, volcanico:1, incendio:3}},
+  {name:"Meta", region:"Orinoquía", population:1000, vulnerability:2, exposicion:2, hazards:{sismo:1, inundacion:4, deslizamiento:1, volcanico:1, incendio:4}},
+  {name:"Vichada", region:"Orinoquía", population:110, vulnerability:4, exposicion:1, hazards:{sismo:1, inundacion:1, deslizamiento:1, volcanico:1, incendio:3}},
+  // --- Amazonía ---
+  {name:"Amazonas", region:"Amazonía", population:80, vulnerability:4, exposicion:1, hazards:{sismo:1, inundacion:1, deslizamiento:1, volcanico:1, incendio:1}},
+  {name:"Caquetá", region:"Amazonía", population:400, vulnerability:3, exposicion:1, hazards:{sismo:2, inundacion:3, deslizamiento:2, volcanico:1, incendio:3}},
+  {name:"Guainía", region:"Amazonía", population:50, vulnerability:4, exposicion:1, hazards:{sismo:1, inundacion:1, deslizamiento:1, volcanico:1, incendio:3}},
+  {name:"Guaviare", region:"Amazonía", population:110, vulnerability:3, exposicion:1, hazards:{sismo:1, inundacion:3, deslizamiento:1, volcanico:1, incendio:3}},
+  {name:"Putumayo", region:"Amazonía", population:350, vulnerability:3, exposicion:1, hazards:{sismo:2, inundacion:3, deslizamiento:2, volcanico:3, incendio:3}},
+  {name:"Vaupés", region:"Amazonía", population:44, vulnerability:4, exposicion:1, hazards:{sismo:1, inundacion:1, deslizamiento:1, volcanico:1, incendio:3}},
+  // --- Insular ---
+  {name:"San Andrés y Providencia", region:"Insular", population:80, vulnerability:1, exposicion:1, hazards:{sismo:1, inundacion:1, deslizamiento:1, volcanico:1, incendio:1}},
+];
+
+const REGION_ORDER = ["Caribe","Andina","Pacífica","Orinoquía","Amazonía","Insular"];
+
+// Terremotos históricos reales de Colombia (para análogos de magnitud sísmica)
+const HISTORIC_QUAKES = [
+  {date:"1875-05-18", mag:7.3, place:"Cúcuta, Norte de Santander"},
+  {date:"1906-01-31", mag:8.8, place:"Frontera Colombia–Ecuador (Tumaco)"},
+  {date:"1979-12-12", mag:7.9, place:"Tumaco, Nariño"},
+  {date:"1983-03-31", mag:5.5, place:"Popayán, Cauca"},
+  {date:"1992-10-18", mag:7.2, place:"Murindó, Chocó"},
+  {date:"1994-06-06", mag:6.4, place:"Páez, Cauca"},
+  {date:"1999-01-25", mag:6.2, place:"Eje Cafetero (Armenia), Quindío"},
+  {date:"2008-05-24", mag:5.9, place:"Oriente de Cundinamarca"},
+  {date:"2012-09-30", mag:7.1, place:"La Vega, Cauca"},
+  {date:"2023-08-17", mag:6.1, place:"El Calvario, Meta"},
+  {date:"2026-08-10", mag:7.4, place:"San José del Palmar, Chocó"},
+];
+
+const RECOMMENDATIONS = {
+  sismo: {
+    antes: ["Identifique los puntos más seguros de su vivienda o lugar de trabajo (bajo estructuras firmes, lejos de vidrios) y defina una ruta de evacuación.","Fije muebles altos, estantes y objetos pesados a la pared para evitar caídas.","Prepare un kit de emergencia con agua, linterna, radio, medicamentos y copias de documentos.","Verifique que su vivienda cumpla la norma sismorresistente NSR-10 vigente, especialmente en zonas de amenaza alta o intermedia.","Acuerde con su familia un punto de encuentro externo."],
+    durante: ["Si está en interiores, agáchese, cúbrase bajo un mueble resistente y sujétese hasta que cese el movimiento.","Aléjese de ventanas, espejos y objetos que puedan caer.","Si está en la calle, aléjese de fachadas, postes y cables eléctricos; busque un espacio abierto.","No use ascensores ni corra durante el sismo.","Si conduce, deténgase en un lugar despejado y permanezca dentro del vehículo."],
+    despues: ["Verifique si hay heridos y preste primeros auxilios básicos antes de mover a alguien con lesiones graves.","Inspeccione su vivienda por daños estructurales antes de reingresar; si hay grietas grandes, no la habite.","Esté atento a réplicas y manténgase alejado de estructuras dañadas.","Reporte la emergencia a la línea de la UNGRD o al organismo de socorro local.","Siga únicamente información oficial del SGC y la UNGRD sobre réplicas y afectaciones."],
+  },
+  inundacion: {
+    antes: ["Conozca si su vivienda está en zona de amenaza por inundación consultando al IDEAM o la autoridad municipal.","Eleve instalaciones eléctricas y bienes de valor por encima del nivel histórico de creciente.","Tenga listos documentos, medicamentos y un kit de emergencia en un lugar accesible.","Identifique rutas de evacuación hacia zonas altas y puntos de encuentro.","Manténgase informado de las alertas hidrológicas del IDEAM en temporada de lluvias."],
+    durante: ["Evacúe de inmediato si las autoridades lo indican; no espere a que el agua suba más.","No cruce a pie ni en vehículo corrientes de agua, aunque parezcan poco profundas.","Corte la energía eléctrica de la vivienda si el agua está por ingresar.","Aléjese de ríos, quebradas y zonas bajas o de alcantarillado desbordado.","Ayude a personas mayores, niños y personas con movilidad reducida a evacuar primero."],
+    despues: ["No regrese a la vivienda hasta que las autoridades confirmen que es seguro.","Evite el contacto con agua estancada por riesgo de contaminación y enfermedades.","Revise la instalación eléctrica antes de reconectarla.","Documente los daños con fotografías para trámites de ayuda humanitaria.","Hierva o desinfecte el agua para consumo hasta confirmar que el suministro es seguro."],
+  },
+  deslizamiento: {
+    antes: ["Evite construir o habitar cerca de taludes inestables, laderas con pendiente pronunciada o zonas con grietas visibles en el terreno.","Observe señales de alerta: grietas nuevas, árboles inclinados, filtraciones de agua o sonidos inusuales en el suelo.","Mantenga canales de drenaje y alcantarillas limpios para evitar saturación del suelo.","Consulte los mapas de susceptibilidad por movimientos en masa del SGC para su municipio.","Defina con su comunidad una ruta de evacuación hacia terreno estable."],
+    durante: ["Aléjese inmediatamente de la ladera en dirección perpendicular al movimiento, nunca en línea recta hacia abajo.","Si escucha un ruido retumbante o ve movimiento de tierra, evacúe sin intentar recoger pertenencias.","No cruce puentes o vías que puedan estar afectados por el flujo de lodo y escombros.","Ayude a alertar a los vecinos cercanos si detecta señales de un deslizamiento inminente.","Busque refugio en terreno firme y alejado de laderas, cauces y taludes."],
+    despues: ["No ingrese a la zona afectada hasta que un organismo técnico confirme la estabilidad del terreno.","Reporte el evento a la UNGRD o la alcaldía para activar la atención de emergencia.","Esté atento a nuevos movimientos, ya que un deslizamiento puede reactivarse tras lluvias posteriores.","Evite caminar sobre el material removido; puede ocultar cavidades o inestabilidad.","Participe en la evaluación de daños y en los planes de reubicación si su vivienda quedó en zona de riesgo."],
+  },
+  volcanico: {
+    antes: ["Conozca el nivel de actividad del volcán más cercano en los boletines del Servicio Geológico Colombiano (SGC).","Identifique si su vivienda está en zona de amenaza por flujo de lava, piroclastos o lahares.","Tenga listas mascarillas o paños húmedos para protegerse de la ceniza volcánica.","Conozca la ruta de evacuación oficial hacia zonas seguras definida para su municipio.","Proteja fuentes de agua y alimentos de la posible caída de ceniza."],
+    durante: ["Siga de inmediato las órdenes de evacuación de las autoridades y del SGC ante cambios de nivel de alerta.","Use mascarilla o paño húmedo para evitar inhalar ceniza; proteja también los ojos.","No permanezca cerca de cauces de ríos que nacen en el volcán por riesgo de flujos de lodo (lahares).","Evite conducir en medio de la caída de ceniza; reduce la visibilidad y daña motores.","Manténgase alejado de la zona de amenaza definida oficialmente, incluso si no percibe actividad visible."],
+    despues: ["Retire la ceniza de techos con cuidado; su peso puede colapsar estructuras livianas.","No consuma agua ni alimentos que hayan estado expuestos a ceniza sin verificarlos.","Espere el reporte oficial del SGC antes de regresar a zonas evacuadas.","Esté atento a lahares secundarios en los días siguientes, especialmente si llueve.","Use protección respiratoria durante labores de limpieza de ceniza."],
+  },
+  incendio: {
+    antes: ["Evite quemas agrícolas o de basuras en épocas secas o de alerta por IDEAM.","Mantenga una franja de seguridad libre de vegetación seca alrededor de la vivienda.","Conozca las rutas de evacuación y puntos de encuentro definidos por su municipio.","Tenga a mano herramientas básicas de control (baldes, palas) y un kit de emergencia.","Reporte de inmediato focos de calor o humo sospechoso a la línea de emergencias."],
+    durante: ["Evacúe en dirección contraria al viento y al avance del fuego, nunca cuesta arriba si el incendio está por encima.","Cubra nariz y boca con un paño húmedo para reducir la inhalación de humo.","Cierre puertas y ventanas de la vivienda si el fuego se aproxima, sin trabar las salidas.","No intente combatir un incendio de gran magnitud por cuenta propia; priorice la evacuación.","Aleje vehículos y objetos inflamables de la trayectoria del fuego si es seguro hacerlo."],
+    despues: ["No regrese a la zona hasta la autorización de los organismos de socorro.","Verifique focos residuales o brasas que puedan reavivarse con el viento.","Evite respirar cerca de material calcinado; use protección respiratoria durante la limpieza.","Reporte daños a cultivos, viviendas o infraestructura a la UNGRD y la autoridad ambiental regional.","Apoye las labores de restauración de cobertura vegetal en la zona afectada."],
+  },
+};
+
+const SOURCES = [
+  {t:"UNGRD — Índice de riesgo y registros históricos de movimientos en masa e inundaciones", u:"https://portal.gestiondelriesgo.gov.co/"},
+  {t:"Servicio Geológico Colombiano — Sistema de consulta de la amenaza sísmica de Colombia", u:"https://amenazasismica.sgc.gov.co/"},
+  {t:"Servicio Geológico Colombiano — Monitoreo de volcanes activos (Red de Observatorios Vulcanológicos)", u:"https://www2.sgc.gov.co/"},
+  {t:"IDEAM — Alertas hidrometeorológicas, inundaciones e incendios de la cobertura vegetal", u:"https://www.ideam.gov.co/"},
+  {t:"DNP — Índice Municipal de Riesgo de Desastres ajustado por capacidades", u:"https://colaboracion.dnp.gov.co/CDT/Prensa/IndiceMunicipaldeRiesgodeDesastres.pdf"},
+  {t:"El Universal — Zonas de mayor amenaza sísmica según el SGC (jul. 2026)", u:"https://www.eluniversal.com.co/colombia/2026/07/07/riesgo-de-terremoto-en-colombia-las-zonas-con-mayor-amenaza-sismica/"},
+  {t:"El Espectador — El 80% de la población amenazada por deslizamientos en Colombia", u:"https://www.elespectador.com/colombia/el-80-de-la-poblacion-amenazada-por-deslizamientos-en-colombia/"},
+  {t:"Noticias Caracol — 22 departamentos en riesgo de incendios forestales según el IDEAM", u:"https://www.noticiascaracol.com/colombia/alerta-por-alta-probabilidad-de-incendios-en-colombia-22-departamentos-estan-en-riesgo-segun-ideam-so35"},
+  {t:"Canal Trece — Volcanes activos de Colombia monitoreados por el SGC", u:"https://canaltrece.com.co/noticias/estos-son-los-volcanes-que-se-encuentran-activos-en-colombia/"},
+  {t:"Wikipedia / Infobae — Terremotos históricos de Colombia (magnitudes y epicentros)", u:"https://es.wikipedia.org/wiki/Anexo:Terremotos_en_Colombia"},
+  {t:"DesInventar — Sistema de inventario de efectos de desastres", u:"https://www.desinventar.org/"},
+];
+
+const LANDSLIDE_COUNTS = {
+  "Antioquia":1393, "Cundinamarca":1068, "Nariño":1046, "Tolima":957, "Boyacá":800,
+  "Santander":785, "Valle del Cauca":781, "Cauca":736,
+};
+
+const COLOMBIA_GEO = {"width":760,"height":900,"paths":{"Cauca":"M140.517,528.02L136.567,527.19L137.591,524.949L141.614,527.19ZM225.866,496.719L224.038,502.532L227.475,505.439L228.06,510.67L239.177,520.964L240.42,523.455L238.372,530.427L239.689,533.083L237.275,535.407L231.278,532.336L227.109,535.822L221.99,538.146L215.92,538.976L210.946,535.822L210.288,538.478L212.043,542.378L210.727,546.03L207.143,550.926L203.194,550.179L201.658,551.506L201.731,555.738L200.049,557.895L201.146,562.459L204.73,565.196L209.484,571.999L212.482,574.322L222.429,577.474L218.479,582.949L215.554,589.667L214.969,596.137L217.017,598.957L221.771,599.288L226.671,603.684L219.211,607.167L212.263,606.918L205.315,604.596L203.194,602.108L202.901,595.722L204.145,592.239L200.634,585.686L196.612,584.359L192.882,589.584L184.691,590.331L184.032,581.041L187.47,578.304L187.982,575.898L183.301,569.925L168.82,573.16L164.359,571.833L166.407,563.62L170.502,558.476L164.066,553.083L164.944,548.104L159.093,545.615L149.585,548.685L143.661,549.349L138.908,547.772L133.569,537.731L134.373,533.996L133.422,529.099L127.425,524.617L133.495,523.206L136.567,525.198L135.763,527.937L142.052,528.02L143.076,525.945L138.542,524.534L137.445,521.296L138.542,520.798L143.076,525.945L143.296,525.613L141.028,522.874L141.614,517.312L145.417,514.074L145.343,511.168L148.635,512.164L149.585,508.096L144.758,508.096L152.145,500.456L157.411,492.317L162.384,499.044L164.651,498.546L167.431,501.037L174.964,497.715L179.644,498.878L185.861,502.449L189.664,501.037L191.273,498.131L195.515,501.453L202.316,501.702L206.631,498.38L208.021,491.486L217.017,493.231Z","Nariño":"M120.989,522.625L123.915,523.289L126.328,528.269L125.743,531.257L123.33,530.925L120.404,527.024ZM175.256,637.601L170.137,638.596L162.53,636.606L159.459,634.948L157.338,623.007L153.535,622.758L148.488,619.773L147.172,614.631L144.466,613.553L138.542,615.211L135.543,612.558L125.158,609.655L118.722,604.845L112.725,602.191L108.044,596.966L102.925,596.137L101.462,592.819L98.317,592.653L93.124,586.433L90.199,584.442L88.371,578.221L86.762,578.884L80.765,574.322L89.395,565.279L93.636,564.865L102.925,567.27L104.022,560.467L101.901,561.629L102.193,556.568L100.584,554.991L98.317,557.397L96.416,547.191L103.51,534.328L109.799,527.522L114.626,524.617L117.332,529.763L117.698,525.198L121.94,531.091L126.767,531.34L125.889,524.783L127.425,524.617L133.422,529.099L134.373,533.996L133.569,537.731L138.908,547.772L143.661,549.349L149.585,548.685L159.093,545.615L164.944,548.104L164.066,553.083L170.502,558.476L166.407,563.62L164.359,571.833L168.82,573.16L183.301,569.925L187.982,575.898L187.47,578.304L184.032,581.041L184.691,590.331L181.473,594.146L175.987,596.634L176.061,602.191L178.767,603.767L175.914,611.48L168.601,620.685L174.964,626.241L174.159,627.899L176.134,635.528Z","Chocó":"M162.969,444.699L163.92,445.697L153.462,446.362L159.898,442.038ZM158.874,450.27L163.189,446.695L166.26,447.36L163.042,448.191ZM225.866,406.679L222.721,409.842L221.259,413.837L215.261,419.579L214.676,423.24L208.533,429.146L207.802,434.719L206.193,437.797L202.682,438.296L205.169,442.038L205.169,446.112L207.948,447.942L200.269,455.341L196.758,455.008L193.613,457.918L185.568,455.756L182.423,451.766L177.084,452.681L174.159,449.605L169.698,449.605L167.796,445.863L163.774,444.533L161.287,440.707L162.677,438.712L164.578,430.81L164.213,420.66L166.992,421.492L163.627,417.665L162.238,408.51L162.604,395.939L160.263,385.445L157.557,383.612L153.096,384.029L156.168,378.947L160.409,377.28L162.823,378.28L167.431,373.697L168.235,369.447L162.896,357.609L162.238,359.027L156.46,349.52L156.826,344.015L159.824,347.018L161.507,344.015L160.629,339.676L163.481,331.915L159.898,327.408L160.117,324.486L157.557,323.15L153.827,326.072L152.072,319.142L146.733,315.467L146.221,311.959L148.123,310.455L146.367,306.612L136.202,297.586L139.931,285.63L142.199,285.714L144.173,281.95L142.345,276.011L143.881,273.584L147.318,276.513L150.097,282.619L151.779,283.121L155.217,279.775L163.554,274.17L161.653,270.822L164.505,265.549L167.065,263.624L171.965,262.87L168.966,254.748L164.359,246.622L162.457,246.119L159.532,236.9L156.241,236.061L162.238,225.83L166.845,234.971L173.72,239.33L177.743,245.867L181.034,246.873L182.643,255.334L180.229,259.605L179.205,264.628L174.378,267.475L174.964,271.827L186.446,281.197L195.515,291.735L200.707,294.243L203.56,296.918L204.73,305.609L202.682,309.787L195.88,308.032L188.713,309.369L190.322,314.799L188.421,317.221L181.692,318.724L183.374,325.404L184.983,324.486L185.568,329.995L190.761,334.92L190.103,343.18L195.149,350.521L201.585,350.938L210.508,349.52L215.92,349.603L218.918,357.192L224.111,360.111L223.087,365.696L225.354,372.364L224.769,376.53L227.475,379.863L224.988,385.861L221.478,388.11L220.747,393.107L224.769,399.686Z","Tolima":"M291.25,394.023L291.908,403.099L290.591,410.175L290.591,418.247L287.373,422.158L288.982,426.152L287.812,427.815L287.958,434.803L284.375,442.537L284.814,444.533L289.567,443.867L295.93,447.443L300.83,444.533L304.122,449.438L302.001,458.583L302.878,460.328L300.392,469.055L295.053,473.874L290.299,481.269L290.079,484.758L283.351,492.898L280.572,493.48L275.306,491.819L277.061,485.755L272.234,485.838L270.113,487.998L266.164,488.745L263.312,486.918L255.34,489.41L252.195,493.48L247.002,503.778L236.763,512.579L230.912,509.756L228.06,510.67L227.475,505.439L224.038,502.532L225.866,496.719L227.402,491.652L227.183,485.34L229.742,479.524L231.498,472.046L236.617,464.318L241.371,453.928L249.196,443.202L250.22,436.716L255.12,428.481L257.461,427.233L259.582,422.408L260.24,418.33L262.653,413.587L261.41,411.423L263.239,407.012L261.703,405.43L264.409,401.85L270.479,399.852L272.234,400.435L275.745,395.106L281.815,393.107L287.081,392.857Z","Caquetá":"M226.671,603.684L221.771,599.288L217.017,598.957L214.969,596.137L215.554,589.667L218.479,582.949L222.429,577.474L231.571,577.557L237.495,572.248L248.026,558.227L251.756,554.825L258.119,544.287L261.922,541.549L265.213,536.984L268.139,529.68L271.21,530.676L277.061,526.941L279.109,524.202L276.037,519.553L280.06,512.496L283.936,509.59L292.2,511.749L298.783,520.964L296.003,533.581L296.369,540.802L301.342,547.523L297.832,554.411L298.271,558.393L303.024,564.201L332.206,574.571L344.127,574.985L349.685,584.276L355.536,590.911L356.487,595.473L368.774,607.333L373.381,609.489L376.892,608.328L382.669,603.518L383.766,598.044L386.399,596.054L389.179,598.293L390.276,596.054L393.64,596.386L399.93,600.698L403.367,601.611L406.073,604.513L406.877,608.328L411.266,611.563L411.339,614.963L414.922,618.777L421.431,620.104L424.942,622.343L426.917,626.655L430.281,628.48L429.842,631.05L434.45,634.533L433.938,636.938L437.156,636.689L441.983,642.411L449.369,646.308L455.22,645.645L460.047,648.547L456.756,651.781L445.128,657.254L440.154,661.483L437.814,666.126L434.377,667.204L424.869,667.868L420.334,671.184L415.215,678.067L414.776,684.038L410.754,686.111L405.927,682.462L399.564,688.764L396.346,687.438L391.153,683.208L388.301,682.877L383.035,684.701L377.55,680.969L373.454,684.286L367.311,684.867L361.021,680.057L353.781,681.301L349.539,680.389L348.076,677.818L341.567,674.087L334.839,674.501L327.525,671.599L322.332,667.204L316.335,666.292L313.775,662.063L309.314,661.648L307.778,659.493L304.999,661.317L299.002,660.073L295.418,657.751L293.809,651.366L294.541,647.635L291.542,645.23L285.984,644.152L280.718,641.747L279.109,631.88L268.943,629.558L268.358,624.499L266.383,619.69L263.239,618.031L256.218,618.114L249.343,613.304L243.711,613.304L237.202,611.231L233.692,604.845Z","Huila":"M283.936,509.59L280.06,512.496L276.037,519.553L279.109,524.202L277.061,526.941L271.21,530.676L268.139,529.68L265.213,536.984L261.922,541.549L258.119,544.287L251.756,554.825L248.026,558.227L237.495,572.248L231.571,577.557L222.429,577.474L212.482,574.322L209.484,571.999L204.73,565.196L201.146,562.459L200.049,557.895L201.731,555.738L201.658,551.506L203.194,550.179L207.143,550.926L210.727,546.03L212.043,542.378L210.288,538.478L210.946,535.822L215.92,538.976L221.99,538.146L227.109,535.822L231.278,532.336L237.275,535.407L239.689,533.083L238.372,530.427L240.42,523.455L239.177,520.964L228.06,510.67L230.912,509.756L236.763,512.579L247.002,503.778L252.195,493.48L255.34,489.41L263.312,486.918L266.164,488.745L270.113,487.998L272.234,485.838L277.061,485.755L275.306,491.819L280.572,493.48L283.351,492.898L290.079,484.758L290.299,481.269L295.053,473.874L300.392,469.055L302.001,471.132L303.829,472.462L301.415,478.361L297.759,483.263L296.003,494.393L294.541,496.802L287.52,501.951Z","Putumayo":"M226.671,603.684L233.692,604.845L237.202,611.231L243.711,613.304L249.343,613.304L256.218,618.114L263.239,618.031L266.383,619.69L268.358,624.499L268.943,629.558L279.109,631.88L280.718,641.747L285.984,644.152L291.542,645.23L294.541,647.635L293.809,651.366L295.418,657.751L299.002,660.073L304.999,661.317L307.778,659.493L309.314,661.648L313.775,662.063L316.335,666.292L322.332,667.204L327.525,671.599L334.839,674.501L307.705,682.877L301.708,677.735L296.515,671.848L289.202,670.438L290.957,668.78L287.52,663.473L285.106,665.96L282.181,665.38L276.403,661.648L271.869,657.254L267.919,656.673L264.921,660.405L258.119,658.166L247.002,650.869L239.981,650.952L233.253,646.142L226.963,637.187L223.745,637.767L222.429,635.362L218.553,635.031L214.311,632.46L209.118,635.279L209.484,642.494L200.854,644.069L193.906,641.416L193.394,643.655L185.422,642.991L183.008,640.918L178.182,640.006L175.256,637.601L176.134,635.528L174.159,627.899L174.964,626.241L168.601,620.685L175.914,611.48L178.767,603.767L176.061,602.191L175.987,596.634L181.473,594.146L184.691,590.331L192.882,589.584L196.612,584.359L200.634,585.686L204.145,592.239L202.901,595.722L203.194,602.108L205.315,604.596L212.263,606.918L219.211,607.167Z","Amazonas":"M334.839,674.501L341.567,674.087L348.076,677.818L349.539,680.389L353.781,681.301L361.021,680.057L367.311,684.867L373.454,684.286L377.55,680.969L383.035,684.701L388.301,682.877L391.153,683.208L396.346,687.438L399.564,688.764L405.927,682.462L410.754,686.111L414.776,684.038L415.215,678.067L420.334,671.184L424.869,667.868L434.377,667.204L437.814,666.126L440.154,661.483L445.128,657.254L456.756,651.781L460.047,648.547L462.753,650.205L467.434,649.376L469.116,653.191L473.87,655.264L476.137,654.6L478.77,657.834L478.916,662.229L483.231,670.438L485.645,671.019L487.766,668.863L500.565,672.843L503.124,678.067L507.805,678.482L511.462,674.999L514.607,675.994L510.218,682.462L513.363,683.706L513.656,690.589L511.754,692.164L514.753,697.057L511.462,701.038L514.241,703.609L516.069,702.116L515.996,706.014L518.41,707.838L521.701,706.512L519.141,703.028L530.331,700.623L527.771,705.848L535.377,706.512L538.449,703.941L541.886,706.346L543.422,712.483L545.982,710.99L551.613,713.229L553.734,716.132L553.149,725.09L551.467,732.058L527.844,862.254L526.967,864L522.286,857.598L515.996,853.774L514.533,848.621L509.853,843.883L506.562,843.385L503.636,845.795L498.444,845.629L489.082,841.556L522.725,788.899L520.604,784.832L518.19,786.492L513.656,784.417L510.657,780.1L507.512,781.345L507.586,777.61L502.685,777.942L496.688,773.626L493.324,775.867L490.472,769.809L486.376,768.813L482.207,764.996L476.283,763.419L474.967,766.406L468.897,766.572L465.167,770.473L460.413,770.141L455.22,772.216L453.465,766.24L451.417,769.145L449.443,764.581L442.495,762.008L439.935,763.004L439.569,760.432L434.523,763.004L428.306,769.892L422.309,769.975L418.725,773.626L414.776,773.129L412.728,774.954L407.17,775.701L404.903,773.626L398.979,772.548L394.956,770.141L391.299,774.29L386.984,772.299L380.183,774.29L378.94,771.22L374.625,768.398L373.308,770.639L369.578,768.066L367.677,764.166L371.918,757.196L369.066,751.636L368.262,743.755L365.263,740.934L360.656,743.34L351.294,737.533L353.561,732.556L352.976,727.91L348.661,724.095L349.685,722.685L346.102,716.962L340.251,713.395L337.91,715.303L334.034,713.727L332.059,709.995L327.306,708.917L324.965,704.438L322.259,705.433L316.335,703.692L311.216,697.389L313.629,696.808L313.264,693.823L309.534,691.418L310.192,688.433L307.705,682.877Z","Bolívar":"M250.22,155.23L249.782,153.461L252.707,147.817L247.149,152.113L244.223,153.124L249.708,146.384L253.511,143.856L253.073,140.231L250.805,138.545L254.097,135.425L253.731,130.533L258.997,125.808L266.237,124.374L267.627,128.424L265.725,133.232L266.895,135.341L270.406,136.015L272.381,139.641L275.087,139.135L282.912,146.468L281.669,152.956L285.838,154.977L288.324,158.178L288.105,160.535L284.96,162.977L284.887,166.344L287.958,171.393L287.227,174.59L289.641,178.291L288.763,187.456L292.785,188.381L302.878,197.793L306.901,196.448L307.778,198.465L313.19,199.641L318.456,205.184L323.649,208.375L325.989,207.031L328.915,210.306L334.4,211.145L334.546,215.342L337.691,218.951L336.594,227.592L339.885,236.816L340.178,243.27L338.276,248.8L338.715,251.565L335.204,254.329L334.473,259.27L337.252,270.571L336.301,279.775L332.645,283.958L333.083,288.808L331.621,294.326L315.75,309.453L311.216,308.784L308.583,300.93L308.363,293.323L310.996,287.805L310.192,285.045L305.072,291.317L300.465,288.306L299.221,283.289L300.538,278.019L303.536,275.676L304.195,272.663L302.001,269.483L301.415,264.545L298.636,259.772L287.081,250.224L288.69,247.124L288.47,245.7L294.614,244.192L299.88,239.666L300.977,236.564L298.417,223.398L301.489,219.454L295.638,211.481L287.52,205.94L283.79,200.985L281.815,192.499L283.79,188.297L281.742,186.363L277.354,185.691L278.451,183.253L275.525,182.832L269.821,177.702L264.189,175.936L260.459,177.871L262.727,165.839L255.267,164.071L255.413,157.841L252.634,157.925L254.901,152.703ZM267.554,121.589L265.579,121.842L267.627,119.225L267.919,120.829Z","Valle del Cauca":"M241.371,453.928L236.617,464.318L231.498,472.046L229.742,479.524L227.183,485.34L227.402,491.652L225.866,496.719L217.017,493.231L208.021,491.486L206.631,498.38L202.316,501.702L195.515,501.453L191.273,498.131L189.664,501.037L185.861,502.449L179.644,498.878L174.964,497.715L167.431,501.037L164.651,498.546L162.384,499.044L157.411,492.317L157.777,489.659L162.238,487.416L166.333,478.527L169.405,477.613L171.892,473.791L170.722,469.803L173.281,469.72L173.72,466.395L178.84,461.658L174.159,461.326L174.305,463.487L167.869,465.731L164.944,462.323L165.529,459.331L168.308,458.915L170.941,454.51L167.284,452.431L165.602,454.51L163.262,461.326L159.386,457.585L160.19,455.59L158.874,450.27L163.042,448.191L166.26,447.36L167.284,446.528L167.796,445.863L169.698,449.605L174.159,449.605L177.084,452.681L182.423,451.766L185.568,455.756L193.613,457.918L196.758,455.008L200.269,455.341L207.948,447.942L205.169,446.112L205.169,442.038L202.682,438.296L206.193,437.797L207.802,434.719L208.533,429.146L214.676,423.24L215.261,419.579L221.259,413.837L222.721,409.842L225.866,406.679L234.13,420.078L243.711,422.574L244.004,424.82L238.226,424.987L235.739,430.477L235.008,436.882L239.031,438.213L239.981,443.618L238.007,447.443L238.007,452.431Z","Sucre":"M244.443,188.969L248.319,187.204L250.44,178.796L248.465,175.347L244.15,174.758L246.856,172.066L249.855,161.63L250.22,155.23L254.901,152.703L252.634,157.925L255.413,157.841L255.267,164.071L262.727,165.839L260.459,177.871L264.189,175.936L269.821,177.702L275.525,182.832L278.451,183.253L277.354,185.691L281.742,186.363L283.79,188.297L281.815,192.499L283.79,200.985L287.52,205.94L295.638,211.481L301.489,219.454L298.417,223.398L300.977,236.564L299.88,239.666L294.614,244.192L288.47,245.7L288.251,242.18L281.669,235.39L275.013,237.067L269.894,239.582L264.409,235.726L261.118,219.622L264.262,214.923L268.577,213.58L268.358,207.703L257.68,202.161L255.998,197.877L244.369,192.079Z","Atlántico":"M266.237,124.374L267.919,123.024L267.554,121.589L267.919,120.829L267.627,119.225L277.061,113.906L277.719,110.95L286.423,105.29L290.372,109.936L292.42,114.75L292.2,130.618L288.397,134.329L286.935,139.557L282.912,146.468L275.087,139.135L272.381,139.641L270.406,136.015L266.895,135.341L265.725,133.232L267.627,128.424Z","Cesar":"M338.715,251.565L338.276,248.8L340.178,243.27L339.885,236.816L336.594,227.592L337.691,218.951L334.546,215.342L337.983,207.031L334.107,200.565L330.45,200.061L330.304,195.104L328.037,189.894L321.382,184.85L326.867,180.31L334.254,181.403L338.788,179.973L335.936,172.907L335.936,170.383L327.744,161.967L324.892,157.167L325.697,151.271L333.376,141.158L339.446,140.315L348.954,134.666L347.125,127.243L349.685,123.277L345.59,121.167L347.564,117.537L355.17,116.439L364.02,117.537L365.117,123.108L371.333,125.893L373.747,128.34L368.481,136.943L370.968,139.81L376.819,139.725L381.572,138.461L380.549,151.103L377.989,159.862L378.501,167.943L371.333,181.739L368.627,183.673L363.8,191.743L362.045,196.028L358.754,199.137L359.485,201.573L356.852,202.329L355.39,216.517L356.414,220.126L350.124,228.095L349.685,230.359L353.196,236.564L351.367,240.085L354.951,243.521L357.438,241.007L356.487,237.486L358.973,237.067L359.997,240.001L357.291,248.297L357.291,253.324L359.559,258.851L363.215,260.275L360.144,264.796L359.851,269.065L356.121,274.086L352.976,275.592L346.54,272.831L340.397,272.58L340.616,268.479L344.054,264.963L344.127,262.284L341.494,260.275Z","La Guajira":"M349.539,95.823L357.584,95.823L362.996,94.977L374.771,84.911L380.695,81.78L389.252,74.669L404.391,69.926L413.679,65.181L419.896,54.161L418.287,47.629L428.233,46.611L425.893,49.665L428.306,51.701L433.206,48.902L431.963,45.423L428.599,45.168L433.206,41.094L436.351,43.132L441.836,37.868L441.617,36L449.808,36.849L464.07,42.877L470.359,54.67L469.116,58.655L461.291,63.486L459.828,67.045L453.758,69.756L428.16,76.447L426.258,78.309L414.045,101.318L402.124,103.684L398.321,111.879L391.885,119.225L389.544,126.062L385.156,131.798L381.572,138.461L376.819,139.725L370.968,139.81L368.481,136.943L373.747,128.34L371.333,125.893L365.117,123.108L364.02,117.537L355.17,116.439L347.564,117.537L345.37,110.19L346.028,102.754L348.734,100.134Z","Magdalena":"M347.564,117.537L345.59,121.167L349.685,123.277L347.125,127.243L348.954,134.666L339.446,140.315L333.376,141.158L325.697,151.271L324.892,157.167L327.744,161.967L335.936,170.383L335.936,172.907L338.788,179.973L334.254,181.403L326.867,180.31L321.382,184.85L328.037,189.894L330.304,195.104L330.45,200.061L334.107,200.565L337.983,207.031L334.546,215.342L334.4,211.145L328.915,210.306L325.989,207.031L323.649,208.375L318.456,205.184L313.19,199.641L307.778,198.465L306.901,196.448L302.878,197.793L292.785,188.381L288.763,187.456L289.641,178.291L287.227,174.59L287.958,171.393L284.887,166.344L284.96,162.977L288.105,160.535L288.324,158.178L285.838,154.977L281.669,152.956L282.912,146.468L286.935,139.557L288.397,134.329L292.2,130.618L292.42,114.75L290.372,109.936L286.423,105.29L286.569,104.191L302.366,109.936L310.338,111.119L303.39,111.034L302.659,113.399L304.414,117.199L299.148,115.51L298.344,120.323L304.048,117.706L305.657,122.348L310.265,120.913L314.287,110.19L317.432,105.712L316.262,99.712L318.895,93.793L327.964,91.848L336.74,95.907L349.539,95.823L348.734,100.134L346.028,102.754L345.37,110.19Z","Arauca":"M428.453,309.035L434.962,309.954L437.814,307.865L445.42,306.696L462.022,308.45L462.388,310.121L466.849,311.123L477.892,308.784L480.745,306.194L490.618,304.356L496.761,305.108L499.541,308.534L502.466,308.951L509.487,312.376L517.459,310.372L520.457,312.126L552.637,352.856L553.222,352.856L546.348,356.192L535.816,355.775L532.379,357.609L527.259,352.689L523.968,351.438L519.36,346.517L515.85,345.516L506.854,345.182L500.345,347.768L489.375,348.519L482.646,348.269L465.752,345.349L453.172,349.103L446.005,348.519L440.374,349.02L433.718,351.188L429.257,351.438L418.945,355.274L413.898,352.105L409.657,345.85L410.9,341.428L413.679,337.256L418.945,335.42L420.554,332.249L421.724,322.732L424.138,320.144Z","Norte de Santander":"M346.54,272.831L352.976,275.592L356.121,274.086L359.851,269.065L360.144,264.796L363.215,260.275L359.559,258.851L357.291,253.324L357.291,248.297L359.997,240.001L358.973,237.067L356.487,237.486L357.438,241.007L354.951,243.521L351.367,240.085L353.196,236.564L349.685,230.359L350.124,228.095L356.414,220.126L355.39,216.517L356.852,202.329L359.485,201.573L366.945,201.153L376.965,195.02L378.501,202.245L380.549,204.848L385.961,202.665L388.155,206.864L393.42,227.172L394.371,228.85L407.609,242.767L407.17,246.789L410.169,254.496L409.437,257.511L406.658,257.511L402.709,262.117L404.464,267.977L402.855,277.015L403.879,281.03L402.928,284.125L404.464,287.47L410.827,289.979L416.531,290.313L418.579,292.989L419.091,299.76L422.675,306.027L426.99,308.701L417.775,307.364L414.264,310.539L412.509,309.035L407.828,315.383L401.831,313.546L399.71,315.049L398.321,309.118L389.983,309.87L383.035,305.693L385.741,301.264L383.255,296.583L385.156,291.567L382.158,285.63L378.647,282.87L377.842,278.855L366.799,278.019L364.605,282.285L359.12,281.867L352.611,279.19Z","Casanare":"M410.9,341.428L409.657,345.85L413.898,352.105L418.945,355.274L429.257,351.438L433.718,351.188L440.374,349.02L446.005,348.519L453.172,349.103L465.752,345.349L482.646,348.269L489.375,348.519L500.345,347.768L506.854,345.182L515.85,345.516L519.36,346.517L523.968,351.438L527.259,352.689L532.379,357.609L530.258,360.361L526.747,368.363L521.847,375.28L516.069,379.363L508.317,380.28L503.124,382.029L491.788,389.11L491.349,392.358L481.476,400.768L477.966,402.6L472.992,412.422L465.386,417.582L462.388,417.914L448.126,424.155L442.202,427.815L435.62,429.646L431.744,433.888L426.112,438.129L423.26,438.296L419.237,435.551L410.754,437.63L408.633,440.791L405.342,440.292L401.758,441.955L399.125,440.292L397.735,442.537L389.837,442.371L389.617,440.541L380.987,431.891L374.844,421.576L374.039,417.748L375.941,409.093L378.647,409.426L382.084,404.265L379.671,401.184L380.475,396.522L386.838,389.443L391.738,394.523L397.589,390.859L406,380.863L410.973,383.362L413.313,376.28L414.996,374.614L409.437,368.697L404.683,366.113L407.316,363.779L409.876,355.024L406.219,348.769L409.291,342.346Z","Guaviare":"M424.942,622.343L421.431,620.104L414.922,618.777L411.339,614.963L411.266,611.563L406.877,608.328L406.073,604.513L403.367,601.611L399.93,600.698L393.64,596.386L390.276,596.054L389.179,598.293L386.399,596.054L383.766,598.044L382.669,603.518L376.892,608.328L373.381,609.489L368.774,607.333L356.487,595.473L355.536,590.911L349.685,584.276L344.127,574.985L344.858,574.156L345.151,542.046L347.93,537.399L356.414,540.221L365.483,539.225L366.799,537.399L369.871,538.644L376.38,536.237L380.987,533L382.084,529.514L387.716,526.941L390.422,528.933L392.031,526.526L395.541,528.601L396.638,525.945L405.927,522.293L408.633,520.134L414.264,522.043L414.484,519.304L417.19,518.391L416.97,515.402L420.7,513.742L427.063,517.063L434.669,515.485L436.936,514.074L438.545,516.232L439.789,513.077L445.274,516.315L448.345,514.323L457.122,514.738L460.998,511.832L464.874,514.323L467.653,512.911L472.773,513.659L477.819,513.825L484.767,517.229L496.03,514.987L500.565,517.81L481.11,525.945L480.964,527.273L488.424,530.427L491.934,534.909L494.567,540.304L500.418,542.876L510.218,545.366L523.456,542.876L525.284,546.777L520.019,551.506L515.338,554.991L503.344,557.149L500.638,558.891L490.618,561.38L488.497,560.55L480.306,560.716L477.6,563.786L468.092,568.515L462.973,572.663L456.683,569.676L456.025,576.313L454.635,578.055L449.296,591.99L449.296,598.044L445.932,603.684L442.787,606.67L438.692,607.25L437.156,609.904Z","Meta":"M472.773,513.659L467.653,512.911L464.874,514.323L460.998,511.832L457.122,514.738L448.345,514.323L445.274,516.315L439.789,513.077L438.545,516.232L436.936,514.074L434.669,515.485L427.063,517.063L420.7,513.742L416.97,515.402L417.19,518.391L414.484,519.304L414.264,522.043L408.633,520.134L405.927,522.293L396.638,525.945L395.541,528.601L392.031,526.526L390.422,528.933L387.716,526.941L382.084,529.514L380.987,533L376.38,536.237L369.871,538.644L366.799,537.399L365.483,539.225L356.414,540.221L347.93,537.399L345.151,542.046L344.858,574.156L344.127,574.985L332.206,574.571L303.024,564.201L298.271,558.393L297.832,554.411L301.342,547.523L296.369,540.802L296.003,533.581L298.783,520.964L292.2,511.749L283.936,509.59L287.52,501.951L294.541,496.802L296.003,494.393L297.759,483.263L301.415,478.361L303.829,472.462L307.047,473.708L311.581,467.226L312.898,463.403L317.944,456.837L320.504,457.502L322.04,457.585L327.891,452.764L337.325,447.775L340.397,447.859L338.642,443.368L338.276,435.884L343.03,432.058L346.76,433.971L350.855,442.703L353.415,443.701L359.412,441.872L365.409,443.452L370.895,446.029L374.332,422.408L374.844,421.576L380.987,431.891L389.617,440.541L389.837,442.371L397.735,442.537L399.125,440.292L401.758,441.955L405.342,440.292L408.633,440.791L410.754,437.63L419.237,435.551L423.26,438.296L426.112,438.129L431.744,433.888L435.62,429.646L442.202,427.815L448.126,424.155L462.388,417.914L465.386,417.582L472.992,412.422L472.846,489.327Z","Vaupés":"M460.047,648.547L455.22,645.645L449.369,646.308L441.983,642.411L437.156,636.689L433.938,636.938L434.45,634.533L429.842,631.05L430.281,628.48L426.917,626.655L424.942,622.343L437.156,609.904L438.692,607.25L442.787,606.67L445.932,603.684L449.296,598.044L449.296,591.99L454.635,578.055L456.025,576.313L456.683,569.676L462.973,572.663L468.092,568.515L477.6,563.786L480.306,560.716L488.497,560.55L490.618,561.38L500.638,558.891L503.344,557.149L515.338,554.991L520.019,551.506L517.532,562.956L522.725,567.27L533.037,570.921L532.671,572.829L532.525,602.855L536.986,601.362L539.253,602.855L544.007,602.191L550.882,602.855L553.881,604.347L556.221,602.689L560.317,603.933L566.972,612.309L565.217,619.855L567.703,623.007L563.388,624.748L556.66,623.504L552.857,619.773L549.639,619.109L544.007,623.007L540.277,622.177L534.792,625.163L522.578,626.158L521.628,661.234L521.92,662.975L527.99,670.106L532.232,671.848L537.718,677.404L543.349,679.974L545.689,686.857L543.568,691.252L546.348,695.15L547.957,700.457L552.345,704.189L552.418,708.834L554.831,713.395L553.734,716.132L551.613,713.229L545.982,710.99L543.422,712.483L541.886,706.346L538.449,703.941L535.377,706.512L527.771,705.848L530.331,700.623L519.141,703.028L521.701,706.512L518.41,707.838L515.996,706.014L516.069,702.116L514.241,703.609L511.462,701.038L514.753,697.057L511.754,692.164L513.656,690.589L513.363,683.706L510.218,682.462L514.607,675.994L511.462,674.999L507.805,678.482L503.124,678.067L500.565,672.843L487.766,668.863L485.645,671.019L483.231,670.438L478.916,662.229L478.77,657.834L476.137,654.6L473.87,655.264L469.116,653.191L467.434,649.376L462.753,650.205Z","Vichada":"M500.565,517.81L496.03,514.987L484.767,517.229L477.819,513.825L472.773,513.659L472.846,489.327L472.992,412.422L477.966,402.6L481.476,400.768L491.349,392.358L491.788,389.11L503.124,382.029L508.317,380.28L516.069,379.363L521.847,375.28L526.747,368.363L530.258,360.361L532.379,357.609L535.816,355.775L546.348,356.192L553.222,352.856L559.146,351.688L562.364,354.941L571.506,348.102L582.916,349.603L592.496,352.105L594.91,350.437L601.711,349.27L608.806,350.187L616.558,347.768L622.775,348.352L627.455,347.268L631.77,343.681L637.036,343.848L644.788,345.766L648.884,348.936L648.811,353.273L651.883,356.942L651.663,360.527L649.177,361.695L643.472,367.78L641.424,371.53L641.059,375.947L642.741,381.03L641.205,384.528L633.16,389.693L631.478,393.69L632.94,399.186L632.429,402.933L633.964,405.264L632.282,414.752L632.94,416.333L630.454,432.557L632.209,433.555L634.476,441.123L633.379,444.533L634.33,449.272L637.694,455.84L633.818,460.162L629.796,461.658L626.212,459.913L624.457,461.076L619.191,457.585L615.461,461.741L614.51,459.165L611.292,460.661L610.561,457.668L606.246,456.837L605.003,461.907L596.884,467.891L589.863,467.808L584.159,473.126L577.211,472.462L576.333,475.536L572.457,474.871L570.775,476.949L567.63,473.874L565.875,474.954L560.097,471.298L553.222,473.376L551.101,471.88L544.739,473.043L542.398,480.438L539.692,479.109L530.477,479.275L527.113,482.266L521.116,481.269L521.847,486.17L519.36,486.669L517.825,490.074L518.848,497.134L515.411,497.466L510.072,503.113L511.681,509.175L506.342,514.738Z","Antioquia":"M287.081,250.224L298.636,259.772L301.415,264.545L302.001,269.483L304.195,272.663L303.536,275.676L300.538,278.019L299.221,283.289L300.465,288.306L305.072,291.317L310.192,285.045L310.996,287.805L308.363,293.323L308.583,300.93L311.216,308.784L315.75,309.453L331.621,294.326L331.986,304.022L333.668,308.283L327.818,312.544L322.844,319.726L313.702,326.489L309.095,327.825L308.144,335.337L309.534,337.924L302.586,344.849L299.587,348.185L298.344,352.856L299.733,355.691L299.075,362.945L296.589,365.696L295.565,370.197L293.078,370.03L289.86,374.28L285.472,371.614L279.328,373.114L274.428,375.78L274.355,378.863L271.795,382.113L269.309,382.862L265.286,386.944L263.239,385.445L262.142,379.363L259.874,375.03L255.706,375.197L248.685,372.03L249.708,374.614L250.001,382.696L242.468,380.78L236.544,384.195L231.571,383.362L227.475,379.863L224.769,376.53L225.354,372.364L223.087,365.696L224.111,360.111L218.918,357.192L215.92,349.603L210.508,349.52L201.585,350.938L195.149,350.521L190.103,343.18L190.761,334.92L185.568,329.995L184.983,324.486L183.374,325.404L181.692,318.724L188.421,317.221L190.322,314.799L188.713,309.369L195.88,308.032L202.682,309.787L204.73,305.609L203.56,296.918L200.707,294.243L195.515,291.735L186.446,281.197L174.964,271.827L174.378,267.475L179.205,264.628L180.229,259.605L182.643,255.334L181.034,246.873L183.52,250.392L183.155,253.24L188.64,252.821L188.567,258.265L184.91,257.428L183.594,261.363L187.543,263.959L192.297,263.373L193.54,255.669L191.712,246.705L191.639,239.833L188.274,234.72L182.935,232.456L185.641,228.766L196.392,225.663L197.709,222.391L202.024,220.965L207.728,216.266L210.434,222.81L213.287,226.753L218.333,230.863L218.918,239.163L213.945,245.616L208.972,254.664L208.313,263.038L204.73,272.496L205.096,279.524L209.484,290.48L236.105,291.233L241.005,284.459L249.782,281.03L251.902,275.09L256.291,269.149L261.044,265.382L267.627,257.344L273.258,256.255L281.742,256.004Z","Córdoba":"M287.081,250.224L281.742,256.004L273.258,256.255L267.627,257.344L261.044,265.382L256.291,269.149L251.902,275.09L249.782,281.03L241.005,284.459L236.105,291.233L209.484,290.48L205.096,279.524L204.73,272.496L208.313,263.038L208.972,254.664L213.945,245.616L218.918,239.163L218.333,230.863L213.287,226.753L210.434,222.81L207.728,216.266L208.533,214.251L213.652,212.74L217.017,209.466L217.09,206.276L220.381,202.329L221.332,197.457L223.818,196.532L225.72,192.667L233.984,188.381L238.592,187.54L238.884,190.23L244.443,188.969L244.369,192.079L255.998,197.877L257.68,202.161L268.358,207.703L268.577,213.58L264.262,214.923L261.118,219.622L264.409,235.726L269.894,239.582L275.013,237.067L281.669,235.39L288.251,242.18L288.47,245.7L288.69,247.124Z","Boyacá":"M401.831,313.546L407.828,315.383L412.509,309.035L414.264,310.539L417.775,307.364L426.99,308.701L428.453,309.035L424.138,320.144L421.724,322.732L420.554,332.249L418.945,335.42L413.679,337.256L410.9,341.428L409.291,342.346L406.219,348.769L409.876,355.024L407.316,363.779L404.683,366.113L409.437,368.697L414.996,374.614L413.313,376.28L410.973,383.362L406,380.863L397.589,390.859L391.738,394.523L386.838,389.443L380.475,396.522L379.671,401.184L382.084,404.265L378.647,409.426L375.941,409.093L374.039,417.748L374.844,421.576L372.796,424.321L366.726,424.321L366.141,422.075L362.411,421.409L357.584,414.752L351.66,413.92L350.49,411.673L351.879,407.261L353.854,405.846L351.66,396.605L348.588,393.357L348.296,389.276L345.224,385.611L338.422,383.279L336.96,380.78L328.11,389.943L323.795,387.694L323.356,385.861L316.116,384.528L313.337,379.363L313.849,375.28L312.752,369.364L311.069,367.446L306.462,370.447L301.854,369.28L296.296,371.114L295.711,370.614L295.565,370.197L296.589,365.696L299.075,362.945L299.733,355.691L298.344,352.856L299.587,348.185L302.586,344.849L306.462,354.19L310.557,356.942L313.849,355.441L316.335,359.86L314.799,364.696L316.701,366.53L319.553,363.862L322.625,365.279L329.5,372.114L341.128,370.697L345.955,372.697L347.199,362.778L348.954,358.526L352.83,353.607L357.876,357.276L357.73,362.778L354.146,366.446L357.511,370.947L359.924,365.946L363.288,366.029L366.653,359.777L375.722,361.778L382.596,352.773L386.399,351.271L389.471,347.518L390.568,336.255L387.496,332.499L389.179,330.496L391.738,332.666L394.152,337.423L396.273,337.173L400.003,334.002L402.124,326.907L403.148,317.054Z","Santander":"M401.831,313.546L403.148,317.054L402.124,326.907L400.003,334.002L396.273,337.173L394.152,337.423L391.738,332.666L389.179,330.496L387.496,332.499L390.568,336.255L389.471,347.518L386.399,351.271L382.596,352.773L375.722,361.778L366.653,359.777L363.288,366.029L359.924,365.946L357.511,370.947L354.146,366.446L357.73,362.778L357.876,357.276L352.83,353.607L348.954,358.526L347.199,362.778L345.955,372.697L341.128,370.697L329.5,372.114L322.625,365.279L319.553,363.862L316.701,366.53L314.799,364.696L316.335,359.86L313.849,355.441L310.557,356.942L306.462,354.19L302.586,344.849L309.534,337.924L308.144,335.337L309.095,327.825L313.702,326.489L322.844,319.726L327.818,312.544L333.668,308.283L331.986,304.022L331.621,294.326L333.083,288.808L332.645,283.958L336.301,279.775L337.252,270.571L334.473,259.27L335.204,254.329L338.715,251.565L341.494,260.275L344.127,262.284L344.054,264.963L340.616,268.479L340.397,272.58L346.54,272.831L352.611,279.19L359.12,281.867L364.605,282.285L366.799,278.019L377.842,278.855L378.647,282.87L382.158,285.63L385.156,291.567L383.255,296.583L385.741,301.264L383.035,305.693L389.983,309.87L398.321,309.118L399.71,315.049Z","Caldas":"M295.565,370.197L295.711,370.614L296.296,371.114L296.735,376.53L294.76,381.196L295.638,385.778L291.25,394.023L287.081,392.857L281.815,393.107L275.745,395.106L272.234,400.435L270.479,399.852L264.409,401.85L261.703,405.43L263.239,407.012L261.41,411.423L262.653,413.587L260.24,418.33L254.609,412.422L248.758,411.673L247.441,409.675L243.931,410.757L242.029,406.179L239.616,411.423L236.544,411.756L233.18,406.262L234.935,402.433L237.641,402.933L239.104,398.936L238.592,394.856L244.735,395.689L247.222,393.357L243.492,388.777L236.69,389.859L236.544,384.195L242.468,380.78L250.001,382.696L249.708,374.614L248.685,372.03L255.706,375.197L259.874,375.03L262.142,379.363L263.239,385.445L265.286,386.944L269.309,382.862L271.795,382.113L274.355,378.863L274.428,375.78L279.328,373.114L285.472,371.614L289.86,374.28L293.078,370.03Z","Cundinamarca":"M291.25,394.023L295.638,385.778L294.76,381.196L296.735,376.53L296.296,371.114L301.854,369.28L306.462,370.447L311.069,367.446L312.752,369.364L313.849,375.28L313.337,379.363L316.116,384.528L323.356,385.861L323.795,387.694L328.11,389.943L336.96,380.78L338.422,383.279L345.224,385.611L348.296,389.276L348.588,393.357L351.66,396.605L353.854,405.846L351.879,407.261L350.49,411.673L351.66,413.92L357.584,414.752L362.411,421.409L366.141,422.075L366.726,424.321L372.796,424.321L374.844,421.576L374.332,422.408L370.895,446.029L365.409,443.452L359.412,441.872L353.415,443.701L350.855,442.703L346.76,433.971L343.03,432.058L338.276,435.884L338.642,443.368L340.397,447.859L337.325,447.775L327.891,452.764L322.04,457.585L320.504,457.502L323.503,450.852L320.796,444.117L322.844,440.874L322.405,437.797L328.403,426.568L327.306,424.654L327.671,417.582L324.088,416.583L320.211,424.404L317.067,426.734L319.261,433.056L317.579,445.198L314.726,452.93L312.02,451.6L309.899,456.172L310.338,460.578L307.413,467.476L303.829,472.462L302.001,471.132L300.392,469.055L302.878,460.328L302.001,458.583L304.122,449.438L300.83,444.533L295.93,447.443L289.567,443.867L284.814,444.533L284.375,442.537L287.958,434.803L287.812,427.815L288.982,426.152L287.373,422.158L290.591,418.247L290.591,410.175L291.908,403.099Z","Bogotá D.C.":"M303.829,472.462L307.413,467.476L310.338,460.578L309.899,456.172L312.02,451.6L314.726,452.93L317.579,445.198L319.261,433.056L317.067,426.734L320.211,424.404L324.088,416.583L327.671,417.582L327.306,424.654L328.403,426.568L322.405,437.797L322.844,440.874L320.796,444.117L323.503,450.852L320.504,457.502L317.944,456.837L312.898,463.403L311.581,467.226L307.047,473.708Z","Risaralda":"M236.544,384.195L236.69,389.859L243.492,388.777L247.222,393.357L244.735,395.689L238.592,394.856L239.104,398.936L237.641,402.933L234.935,402.433L233.18,406.262L236.544,411.756L239.616,411.423L242.029,406.179L243.931,410.757L247.441,409.675L248.758,411.673L254.609,412.422L260.24,418.33L259.582,422.408L254.389,424.571L252.634,423.323L243.711,422.574L234.13,420.078L225.866,406.679L224.769,399.686L220.747,393.107L221.478,388.11L224.988,385.861L227.475,379.863L231.571,383.362Z","Quindío":"M243.711,422.574L252.634,423.323L254.389,424.571L259.582,422.408L257.461,427.233L255.12,428.481L250.22,436.716L249.196,443.202L241.371,453.928L238.007,452.431L238.007,447.443L239.981,443.618L239.031,438.213L235.008,436.882L235.739,430.477L238.226,424.987L244.004,424.82Z","Guainía":"M533.037,570.921L522.725,567.27L517.532,562.956L520.019,551.506L525.284,546.777L523.456,542.876L510.218,545.366L500.418,542.876L494.567,540.304L491.934,534.909L488.424,530.427L480.964,527.273L481.11,525.945L500.565,517.81L506.342,514.738L511.681,509.175L510.072,503.113L515.411,497.466L518.848,497.134L517.825,490.074L519.36,486.669L521.847,486.17L521.116,481.269L527.113,482.266L530.477,479.275L539.692,479.109L542.398,480.438L544.739,473.043L551.101,471.88L553.222,473.376L560.097,471.298L565.875,474.954L567.63,473.874L570.775,476.949L572.457,474.871L576.333,475.536L577.211,472.462L584.159,473.126L589.863,467.808L596.884,467.891L605.003,461.907L606.246,456.837L610.561,457.668L611.292,460.661L614.51,459.165L615.461,461.741L619.191,457.585L624.457,461.076L626.212,459.913L629.796,461.658L633.818,460.162L637.694,455.84L638.791,461.326L641.863,469.636L646.617,470.883L649.835,473.625L653.126,482.266L658.026,486.17L657.807,488.247L653.565,494.061L650.786,495.224L631.697,512.745L630.82,517.561L636.012,514.904L642.156,516.398L644.642,522.459L649.177,523.87L657.002,533.083L663.292,536.652L664.462,539.889L662.341,542.461L664.681,549.515L667.095,550.594L666.364,556.319L669.801,561.712L673.97,572.995L676.31,581.041L676.383,584.857L678.87,589.667L679.235,594.81L669.801,597.298L668.265,593.317L669.435,579.133L667.241,570.755L665.34,566.939L660.001,559.804L656.198,552.087L651.371,549.598L643.838,553.83L634.111,565.777L630.6,568.266L623.872,568.764L620.873,565.611L618.825,560.301L613.852,556.153L609.976,564.947L615.68,570.257L557.172,570.257L545.982,567.851L542.545,569.427Z"},"centroids":{"Cauca":[187.7,536.9],"Nariño":[137.2,578.2],"Chocó":[183,359.9],"Tolima":[266,456],"Caquetá":[330,615.4],"Huila":[248.5,529.7],"Putumayo":[236.7,632.6],"Amazonas":[451.4,730.5],"Bolívar":[302.8,222.3],"Valle del Cauca":[204.3,464.2],"Sucre":[273,206],"Atlántico":[280.5,125.6],"Cesar":[351.6,183.2],"La Guajira":[405.3,85.1],"Magdalena":[315.5,148],"Arauca":[477.5,330.9],"Norte de Santander":[382.9,255.1],"Casanare":[446,388.4],"Guaviare":[420.9,560.2],"Meta":[380.5,489.7],"Vaupés":[496.8,622.1],"Vichada":[554.5,421.8],"Antioquia":[250.2,313],"Córdoba":[239.4,241.9],"Boyacá":[372.1,370.1],"Santander":[353.3,324.3],"Caldas":[263.7,391.3],"Cundinamarca":[322.9,417.1],"Bogotá D.C.":[318.5,443.8],"Risaralda":[237.6,404.4],"Quindío":[244.9,435],"Guainía":[583.5,520.6]},"mainlandBounds":[[80.76450772407179,35.99999999999977],[679.2354922759287,864]],"inset":{"width":78,"height":78,"x":14,"y":808,"path":"M36.815,72L28.073,27.579L46.649,6L49.927,13.617Z","centroid":[38.8,34.2]}};
+</script>
+
+<script>
+/* ======================================================================
+   Estado y utilidades
+   ====================================================================== */
+const state = {
+  hazard: "sismo",
+  dept: null,
+  weights: {sismo:20, inundacion:20, deslizamiento:20, volcanico:20, incendio:20},
+  recPhase: "antes",
+  simPlaying: false,
+  simTime: 0,
+};
+
+const LEVEL_KEY = {1:"good", 2:"warning", 3:"serious", 4:"critical"};
+const $ = (sel, root=document) => root.querySelector(sel);
+const el = (tag, cls, html) => { const n=document.createElement(tag); if(cls) n.className=cls; if(html!==undefined) n.innerHTML=html; return n; };
+const fmtPop = (n) => n>=1000 ? (n/1000).toFixed(n%1000===0?0:1)+" M" : n+" mil";
+
+function compositeIndex(dept){
+  const w = state.weights;
+  const totalW = Object.values(w).reduce((a,b)=>a+b,0) || 1;
+  let sum = 0;
+  HAZARDS.forEach(h => { sum += (dept.hazards[h.id]/4) * w[h.id]; });
+  return Math.round((sum/totalW)*100);
+}
+
+// Pesos derivados con el Proceso Analítico Jerárquico (AHP, Saaty) sobre 3 criterios:
+// Amenaza (A), Vulnerabilidad (V), Exposición (E). Matriz de comparación pareada:
+//        A     V     E
+//   A    1     3     5
+//   V   1/3    1     2
+//   E   1/5   1/2    1
+// Vector propio (medias geométricas normalizadas): wA=0.648, wV=0.230, wE=0.122
+// Razón de consistencia CR ≈ 0.003 (<< 0.10) → matriz consistente.
+const AHP_WEIGHTS = {amenaza:0.648, vulnerabilidad:0.230, exposicion:0.122};
+
+function predictedMagnitude(dept, hazardId){
+  const a = dept.hazards[hazardId]/4;
+  const v = dept.vulnerability/4;
+  const e = dept.exposicion/4;
+  const w = AHP_WEIGHTS;
+  const score = Math.round((w.amenaza*a + w.vulnerabilidad*v + w.exposicion*e) * 100);
+  let cls, key;
+  if(score < 35){cls="Leve"; key=1;}
+  else if(score < 55){cls="Moderado"; key=2;}
+  else if(score < 75){cls="Severo"; key=3;}
+  else {cls="Catastrófico"; key=4;}
+  return {score, cls, key};
+}
+
+/* ======================================================================
+    Modelo de aprendizaje automático: agrupamiento no supervisado (K-Means)
+    Único componente de la plataforma que constituye un modelo de ML real
+    (no una fórmula de índice). Se ejecuta enteramente en el navegador sobre
+    las 33 unidades territoriales, usando 7 variables normalizadas por
+    departamento (5 niveles de amenaza + vulnerabilidad + exposición).
+    El objetivo es exploratorio: agrupar departamentos con perfiles de
+    riesgo similares en "arquetipos" interpretables, no predecir un valor.
+   ====================================================================== */
+const ML_DIMS = ["sismo","inundacion","deslizamiento","volcanico","incendio","vulnerability","exposicion"];
+const ML_DIM_LABELS = {
+  sismo:"amenaza sísmica", inundacion:"amenaza de inundación", deslizamiento:"amenaza por deslizamiento",
+  volcanico:"amenaza volcánica", incendio:"amenaza de incendio forestal",
+  vulnerability:"vulnerabilidad social", exposicion:"exposición poblacional",
+};
+const CLUSTER_SWATCH = [
+  {light:"#2a78d6", dark:"#3987e5"},
+  {light:"#eb6834", dark:"#d95926"},
+  {light:"#1baf7a", dark:"#199e70"},
+  {light:"#eda100", dark:"#c98500"},
+];
+
+function ml_vecOf(d){
+  return ML_DIMS.map(k => k==="vulnerability" ? d.vulnerability/4 : k==="exposicion" ? d.exposicion/4 : d.hazards[k]/4);
+}
+function ml_dist(a,b){ let s=0; for(let i=0;i<a.length;i++) s+=(a[i]-b[i])**2; return Math.sqrt(s); }
+
+// K-Means determinista: inicialización por "farthest-first traversal" (sin
+// aleatoriedad) para que el resultado sea 100% reproducible y auditable.
+function kmeans(points, k, maxIter=100){
+  let centroids = [points[0].slice()];
+  while(centroids.length < k){
+    let best=null, bestDist=-1;
+    points.forEach(p => {
+      const d = Math.min(...centroids.map(c => ml_dist(p,c)));
+      if(d > bestDist){ bestDist = d; best = p; }
+    });
+    centroids.push(best.slice());
+  }
+  let assign = new Array(points.length).fill(-1);
+  for(let iter=0; iter<maxIter; iter++){
+    const newAssign = points.map(p => {
+      let bi=0, bd=Infinity;
+      centroids.forEach((c,ci) => { const d = ml_dist(p,c); if(d<bd){ bd=d; bi=ci; } });
+      return bi;
+    });
+    const changed = newAssign.some((a,i) => a!==assign[i]);
+    assign = newAssign;
+    const sums = Array.from({length:k}, () => new Array(points[0].length).fill(0));
+    const counts = new Array(k).fill(0);
+    points.forEach((p,i) => { const c=assign[i]; counts[c]++; p.forEach((v,d)=>sums[c][d]+=v); });
+    centroids = sums.map((s,ci) => counts[ci]>0 ? s.map(v=>v/counts[ci]) : centroids[ci]);
+    if(!changed) break;
+  }
+  let inertia = 0;
+  points.forEach((p,i) => inertia += ml_dist(p, centroids[assign[i]])**2);
+  return {assign, centroids, inertia};
+}
+
+// Etiqueta descriptiva automática: compara cada dimensión del centroide
+// contra la media global y reporta las 1-2 dimensiones que más se apartan
+// por encima de la media — así la etiqueta se deriva de los datos, no de
+// un nombre fijado a mano por clúster.
+function ml_labelFor(centroid, globalMean){
+  const diffs = ML_DIMS.map((k,i) => ({k, d: centroid[i]-globalMean[i]}));
+  diffs.sort((a,b) => b.d - a.d);
+  const top = diffs.filter(x => x.d > 0.08).slice(0,2);
+  if(top.length===0) return "Perfil de riesgo cercano al promedio nacional";
+  return "Predomina " + top.map(x => ML_DIM_LABELS[x.k]).join(" y ");
+}
+
+function computeClustering(depts, k=4){
+  const points = depts.map(ml_vecOf);
+  const globalMean = ML_DIMS.map((_,i) => points.reduce((a,p)=>a+p[i],0)/points.length);
+  const {assign, centroids, inertia} = kmeans(points, k);
+  const labels = centroids.map(c => ml_labelFor(c, globalMean));
+  const byDept = {};
+  depts.forEach((d,i) => byDept[d.name] = assign[i]);
+  // Curva del codo (k=2..6) para justificar la elección de k, mostrada en el panel.
+  const elbow = [2,3,4,5,6].map(kk => ({k:kk, inertia: kmeans(points, kk).inertia}));
+  return {byDept, centroids, labels, inertia, elbow, k};
+}
+const CLUSTERING = computeClustering(DEPARTMENTS, 4);
+
+/* ======================================================================
+                          Tabs de amenaza
+   ====================================================================== */
+function renderTabs(){
+  const nav = $("#hazardTabs");
+  nav.innerHTML = "";
+  HAZARDS.forEach(h => {
+    const b = el("button", "tab" + (h.id===state.hazard ? " active" : ""), `${ICONS[h.id]}<span>${h.label}</span>`);
+    b.addEventListener("click", () => { state.hazard = h.id; refreshAll(); });
+    nav.appendChild(b);
+  });
+}
+
+/* ======================================================================
+   Mapa real de Colombia (choropleth SVG, geometría oficial por departamento)
+   ====================================================================== */
+function renderMap(){
+  const h = HAZARDS.find(x => x.id === state.hazard);
+  $("#mapTitle").textContent = `Nivel de ${h.unit} por departamento`;
+
+  const legend = $("#mapLegend");
+  legend.innerHTML = Object.entries(LEVELS).map(([k,v]) =>
+    `<span class="sw"><span class="dot" style="background:${v.color}"></span>${v.label}</span>`
+  ).join("");
+
+  const G = COLOMBIA_GEO;
+  const body = $("#mapBody");
+
+  let svg = `<div class="geo-map-wrap"><svg viewBox="0 0 ${G.width} ${G.height}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Mapa de Colombia por departamento">`;
+
+  DEPARTMENTS.forEach(d => {
+    if(d.name === "San Andrés y Providencia") return;
+    const pathD = G.paths[d.name];
+    if(!pathD) return;
+    const lvl = d.hazards[state.hazard];
+    const L = LEVELS[lvl];
+    const sel = state.dept && state.dept.name === d.name ? " selected" : "";
+    svg += `<path class="geo-path${sel}" d="${pathD}" fill="${L.color}" data-name="${d.name}"><title>${d.name} — ${L.label}</title></path>`;
+  });
+
+  // Inset: San Andrés y Providencia (fuera de escala geográfica real, recuadro aparte)
+  const ins = G.inset;
+  const sa = DEPARTMENTS.find(d => d.name === "San Andrés y Providencia");
+  const saLvl = sa.hazards[state.hazard];
+  const saSel = state.dept && state.dept.name === sa.name ? " selected" : "";
+  svg += `<g transform="translate(${ins.x},${ins.y})">`;
+  svg += `<rect width="${ins.width}" height="${ins.height}" fill="var(--surface)" stroke="var(--border-strong)" stroke-width="1" rx="5"></rect>`;
+  svg += `<path class="geo-path${saSel}" d="${ins.path}" fill="${LEVELS[saLvl].color}" data-name="${sa.name}"><title>${sa.name} — ${LEVELS[saLvl].label}</title></path>`;
+  svg += `</g>`;
+  svg += `<text x="${ins.x + ins.width/2}" y="${ins.y + ins.height + 12}" text-anchor="middle" class="inset-label">San Andrés y Prov.</text>`;
+  svg += `<text x="${ins.x + ins.width/2}" y="${ins.y - 6}" text-anchor="middle" class="inset-label">(fuera de escala)</text>`;
+
+  svg += `</svg><div class="map-tooltip" id="mapTooltip"></div></div>`;
+  body.innerHTML = svg;
+
+  body.querySelectorAll(".geo-path").forEach(p => {
+    p.addEventListener("click", () => selectDept(p.dataset.name));
+    p.addEventListener("mousemove", (e) => showMapTooltip(e, p.dataset.name));
+    p.addEventListener("mouseleave", hideMapTooltip);
+  });
+}
+
+function showMapTooltip(evt, name){
+  const dept = DEPARTMENTS.find(d => d.name === name);
+  if(!dept) return;
+  const lvl = dept.hazards[state.hazard];
+  const L = LEVELS[lvl];
+  const tip = $("#mapTooltip");
+  if(!tip) return;
+  tip.innerHTML = `<b>${name}</b>${HAZARDS.find(h=>h.id===state.hazard).label}: <span style="color:${L.color}">${L.label}</span>`;
+  const wrap = tip.parentElement.getBoundingClientRect();
+  let left = evt.clientX - wrap.left + 14;
+  let top = evt.clientY - wrap.top + 10;
+  tip.style.left = left + "px";
+  tip.style.top = top + "px";
+  tip.style.opacity = "1";
+}
+function hideMapTooltip(){
+  const tip = $("#mapTooltip");
+  if(tip) tip.style.opacity = "0";
+}
+
+/* ======================================================================
+   Panel de detalle departamental
+   ====================================================================== */
+function renderDetail(){
+  const body = $("#detailBody");
+  if(!state.dept){
+    body.innerHTML = `<p style="color:var(--muted); font-size:13px; margin:6px 0 0;">Seleccione un departamento en el mapa de la izquierda para ver su perfil de riesgo por amenaza, el índice compuesto y la predicción de magnitud.</p>`;
+    return;
+  }
+  const d = state.dept;
+  const idx = compositeIndex(d);
+  const idxLvl = idx<30?1:idx<55?2:idx<75?3:4;
+  const clusterId = CLUSTERING.byDept[d.name];
+  const sw = CLUSTER_SWATCH[clusterId % CLUSTER_SWATCH.length];
+
+  body.innerHTML = `
+    <div class="dept-heading">
+      <h3>${d.name}</h3>
+      <span class="region-chip">${d.region}</span>
+      <span class="region-chip ml-chip" style="border-color:${sw.light}; color:${sw.light}" title="${CLUSTERING.labels[clusterId]} — asignado por el modelo de agrupamiento K-Means (ver panel «Modelo de aprendizaje automático»)">
+        <span class="dot" style="background:${sw.light}"></span>Arquetipo ML ${clusterId+1}
+      </span>
+    </div>
+    <div class="stat-row">
+      <div class="stat-tile"><div class="l">Población aprox.</div><div class="v">${fmtPop(d.population)}</div></div>
+      <div class="stat-tile"><div class="l">Vulnerabilidad social</div><div class="v"><span class="badge lvl-${d.vulnerability}">${LEVELS[d.vulnerability].label}</span></div></div>
+      <div class="stat-tile"><div class="l">Exposición poblacional</div><div class="v"><span class="badge lvl-${d.exposicion}">${LEVELS[d.exposicion].label}</span></div></div>
+      <div class="stat-tile"><div class="l">Índice compuesto</div><div class="v" style="color:${LEVELS[idxLvl].color}">${idx}<small>/100</small></div></div>
+    </div>
+    <div class="hbar-chart" id="hbarChart"></div>
+    <details class="method" style="margin-top:14px;">
+      <summary>Ajustar ponderación del índice compuesto</summary>
+      <div class="weights" id="weightBlock"></div>
+    </details>
+  `;
+  renderHbars();
+  renderWeights();
+}
+
+function renderHbars(){
+  const wrap = $("#hbarChart");
+  if(!wrap) return;
+  const d = state.dept;
+  wrap.innerHTML = "";
+  HAZARDS.forEach(h => {
+    const lvl = d.hazards[h.id];
+    const L = LEVELS[lvl];
+    const row = el("div","hbar-row");
+    row.innerHTML = `
+      <span class="hbar-label">${ICONS[h.id]}${h.label}</span>
+      <span class="hbar-track"><span class="hbar-fill" style="width:${lvl/4*100}%; background:${L.color}"></span></span>
+      <span class="hbar-val" style="color:${L.color}">${L.label}</span>`;
+    wrap.appendChild(row);
+  });
+}
+
+function renderWeights(){
+  const wrap = $("#weightBlock");
+  if(!wrap) return;
+  wrap.innerHTML = "";
+  HAZARDS.forEach(h => {
+    const row = el("div","weight-row");
+    row.innerHTML = `
+      <span>${h.label}</span>
+      <input type="range" min="0" max="100" value="${state.weights[h.id]}" data-hz="${h.id}">
+      <span class="wv mono" id="wv-${h.id}">${state.weights[h.id]}%</span>`;
+    wrap.appendChild(row);
+  });
+  wrap.querySelectorAll("input[type=range]").forEach(inp => {
+    inp.addEventListener("input", (e) => {
+      state.weights[e.target.dataset.hz] = Number(e.target.value);
+      $(`#wv-${e.target.dataset.hz}`).textContent = e.target.value + "%";
+      const idx = compositeIndex(state.dept);
+      const idxLvl = idx<30?1:idx<55?2:idx<75?3:4;
+      const tile = $("#detailBody .stat-tile:nth-child(4) .v");
+      if(tile){ tile.style.color = LEVELS[idxLvl].color; tile.innerHTML = `${idx}<small>/100</small>`; }
+    });
+  });
+}
+
+/* ======================================================================
+   Predicción de magnitud + análogos históricos
+   ====================================================================== */
+function renderMagnitude(){
+  const block = $("#magBlock");
+  if(!state.dept){
+    block.innerHTML = `<p style="font-size:12px; color:var(--muted); margin:0;">Sin departamento seleccionado.</p>`;
+    $("#analogBlock").innerHTML = "";
+    return;
+  }
+  const d = state.dept;
+  const p = predictedMagnitude(d, state.hazard);
+  const L = LEVELS[p.key];
+  block.innerHTML = `
+    <div class="gauge-wrap">
+      <div class="gauge" id="gaugeMeter"></div>
+      <div class="gauge-readout">
+        <div class="cls" style="color:${L.color}">${p.cls}</div>
+        <div class="desc">Índice de magnitud estimada: <b class="mono">${p.score}/100</b> para ${HAZARDS.find(h=>h.id===state.hazard).label.toLowerCase()} en ${d.name}.</div>
+      </div>
+    </div>
+    <details class="method">
+      <summary>Ver fórmula (modelo AVE, pesos por AHP)</summary>
+      <div class="m-body">
+        <code>M = 0.648·(amenaza/4) + 0.230·(vulnerabilidad/4) + 0.122·(exposición/4)</code><br><br>
+        Modelo de <b>Amenaza–Vulnerabilidad–Exposición (AVE)</b>, el esquema estándar en gestión del riesgo de desastres. Los tres pesos no son un supuesto arbitrario: se derivaron con el <b>Proceso Analítico Jerárquico (AHP, Saaty)</b> a partir de una matriz de comparación pareada entre los tres criterios (razón de consistencia CR ≈ 0.003, muy por debajo del umbral aceptable de 0.10). La amenaza física sigue siendo el factor dominante, la vulnerabilidad social pesa como factor secundario y la exposición poblacional (tamaño de población del departamento) actúa como factor terciario. Sigue siendo una fórmula lineal 100% explicable — cada resultado es trazable a sus tres insumos — pensada con fines educativos, no como predicción sísmica ni meteorológica operativa.
+      </div>
+    </details>
+  `;
+  drawGaugeMeter($("#gaugeMeter"), p.score);
+  renderAnalogs(d);
+}
+
+function drawGaugeMeter(container, score){
+  container.innerHTML = `
+    <div style="display:flex; height:14px; border-radius:7px; overflow:hidden; border:1px solid var(--border);">
+      <div style="flex:35; background:var(--good-soft);"></div>
+      <div style="flex:20; background:var(--warning-soft);"></div>
+      <div style="flex:20; background:var(--serious-soft);"></div>
+      <div style="flex:25; background:var(--critical-soft);"></div>
+    </div>
+    <div style="position:relative; height:14px;">
+      <div style="position:absolute; left:${score}%; top:-16px; transform:translateX(-50%); width:0; height:0;
+        border-left:5px solid transparent; border-right:5px solid transparent; border-top:7px solid var(--ink);"></div>
+    </div>
+    <div style="display:flex; justify-content:space-between; font-size:9.5px; color:var(--muted); margin-top:2px;">
+      <span>0</span><span>35</span><span>55</span><span>75</span><span>100</span>
+    </div>`;
+}
+
+function renderAnalogs(d){
+  const block = $("#analogBlock");
+  block.innerHTML = "";
+  if(state.hazard === "sismo"){
+    let matches = HISTORIC_QUAKES.filter(q => q.place.includes(d.name.replace(" D.C.","")));
+    if(!matches.length){
+      matches = [...HISTORIC_QUAKES].sort((a,b)=>b.mag-a.mag).slice(0,3);
+    }
+    matches.slice(0,3).forEach(q => {
+      const card = el("div","analog-card");
+      card.innerHTML = `<div class="h"><span>${q.place}</span><span class="mono">M ${q.mag}</span></div><div class="d">${q.date}</div>`;
+      block.appendChild(card);
+    });
+  } else if(state.hazard === "deslizamiento" && LANDSLIDE_COUNTS[d.name]){
+    const card = el("div","analog-card");
+    card.innerHTML = `<div class="h"><span>Registros históricos UNGRD</span><span class="mono">${LANDSLIDE_COUNTS[d.name]}</span></div><div class="d">Eventos de movimientos en masa reportados para ${d.name} en la base histórica de la UNGRD.</div>`;
+    block.appendChild(card);
+  } else {
+    const card = el("div","analog-card");
+    card.innerHTML = `<div class="h">Sin análogo puntual</div><div class="d">No se dispone de un conteo histórico específico verificado para esta combinación en las fuentes consultadas; se muestra únicamente el nivel de amenaza codificado.</div>`;
+    block.appendChild(card);
+  }
+}
+
+/* ======================================================================
+   Simulación animada (canvas)
+   ====================================================================== */
+const canvas = document.getElementById("simCanvas");
+const ctx = canvas.getContext("2d");
+let rafId = null;
+
+function intensityOf(){
+  if(!state.dept) return 0.35;
+  return state.dept.hazards[state.hazard] / 4;
+}
+
+function css(varName){
+  return getComputedStyle(document.body).getPropertyValue(varName).trim();
+}
+
+function clearCanvas(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle = css("--surface-2");
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+}
+
+function drawSismo(t, k){
+  const w=canvas.width, h=canvas.height, groundY=h*0.72;
+  ctx.strokeStyle = css("--border-strong"); ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(0,groundY); ctx.lineTo(w,groundY); ctx.stroke();
+  const amp = 3 + k*14;
+  const shakeX = Math.sin(t*10)*amp + Math.sin(t*23)*amp*0.4;
+  ctx.save(); ctx.translate(shakeX,0);
+  const buildings = [{x:60,w:70,hh:130},{x:150,w:50,hh:90},{x:220,w:85,hh:170},{x:330,w:60,hh:110},{x:410,w:95,hh:150},{x:530,w:55,hh:95},{x:610,w:80,hh:140},{x:710,w:60,hh:100}];
+  buildings.forEach((b,i) => {
+    const wob = Math.sin(t*10 + i)*amp*0.5;
+    ctx.fillStyle = css("--surface-3");
+    ctx.strokeStyle = css("--border-strong");
+    ctx.fillRect(b.x+wob, groundY-b.hh, b.w, b.hh);
+    ctx.strokeRect(b.x+wob, groundY-b.hh, b.w, b.hh);
+    ctx.fillStyle = css("--accent");
+    for(let r=0;r<Math.floor(b.hh/24);r++){
+      for(let c=0;c<Math.floor(b.w/20);c++){
+        ctx.globalAlpha=0.35;
+        ctx.fillRect(b.x+wob+8+c*20, groundY-b.hh+10+r*24, 8, 10);
+      }
+    }
+    ctx.globalAlpha=1;
+  });
+  ctx.restore();
+  const cx=60, cy=groundY;
+  for(let i=0;i<4;i++){
+    const rad = ((t*(90+k*90)) + i*70) % 420;
+    ctx.beginPath();
+    ctx.strokeStyle = css("--critical");
+    ctx.globalAlpha = Math.max(0, 1 - rad/420) * (0.3+k*0.5);
+    ctx.lineWidth=2;
+    ctx.ellipse(cx,cy,rad,rad*0.35,0,Math.PI,2*Math.PI);
+    ctx.stroke();
+  }
+  ctx.globalAlpha=1;
+  ctx.fillStyle=css("--critical");
+  ctx.beginPath(); ctx.arc(cx,cy,4,0,7); ctx.fill();
+}
+
+function drawInundacion(t,k){
+  const w=canvas.width, h=canvas.height, groundY=h*0.78;
+  ctx.strokeStyle = css("--border-strong");
+  ctx.beginPath(); ctx.moveTo(0,groundY); ctx.lineTo(w,groundY); ctx.stroke();
+  const houses=[{x:80,w:64,hh:80},{x:200,w:80,hh:70},{x:340,w:70,hh:95},{x:470,w:90,hh:75},{x:620,w:70,hh:85}];
+  houses.forEach(hs => {
+    ctx.fillStyle=css("--surface-3"); ctx.strokeStyle=css("--border-strong");
+    ctx.fillRect(hs.x, groundY-hs.hh, hs.w, hs.hh);
+    ctx.strokeRect(hs.x, groundY-hs.hh, hs.w, hs.hh);
+    ctx.beginPath(); ctx.moveTo(hs.x-6,groundY-hs.hh); ctx.lineTo(hs.x+hs.w/2,groundY-hs.hh-28); ctx.lineTo(hs.x+hs.w+6,groundY-hs.hh); ctx.closePath();
+    ctx.fillStyle=css("--accent-2"); ctx.fill();
+  });
+  const maxRise = h*0.5*k;
+  const rise = Math.min(t*22, maxRise);
+  const waterY = groundY - rise;
+  ctx.beginPath();
+  ctx.moveTo(0, waterY);
+  for(let x=0;x<=w;x+=10){ ctx.lineTo(x, waterY + Math.sin(x*0.05 + t*3)*4); }
+  ctx.lineTo(w,h); ctx.lineTo(0,h); ctx.closePath();
+  const grad = ctx.createLinearGradient(0,waterY,0,h);
+  grad.addColorStop(0, "rgba(42,120,214,0.55)");
+  grad.addColorStop(1, "rgba(24,79,149,0.75)");
+  ctx.fillStyle = grad; ctx.fill();
+}
+
+function drawDeslizamiento(t,k){
+  const w=canvas.width, h=canvas.height;
+  ctx.fillStyle = css("--surface-3");
+  ctx.beginPath(); ctx.moveTo(0,h*0.15); ctx.lineTo(w*0.55,h*0.9); ctx.lineTo(0,h*0.9); ctx.closePath(); ctx.fill();
+  ctx.strokeStyle=css("--border-strong"); ctx.stroke();
+  ctx.fillStyle=css("--surface-2");
+  ctx.fillRect(w*0.55,h*0.9,w*0.45,h*0.1);
+  const house={x:w*0.72,y:h*0.9,w:70,hh:60};
+  const travel = Math.min(t*180, 260*k+40);
+  const progress = Math.min(1, t*0.6);
+  const mx = 0 + progress*(w*0.62);
+  ctx.save();
+  ctx.beginPath();
+  for(let i=0;i<26;i++){
+    const px = mx - i*7 + (Math.sin(i*1.7)*8);
+    const py = (h*0.15 + (px/(w*0.55))*(h*0.75)) + Math.cos(i)*6;
+    ctx.fillStyle = i%3===0 ? css("--accent-2") : "rgba(120,72,38,0.85)";
+    ctx.beginPath(); ctx.ellipse(Math.max(px,0), Math.min(py,h*0.9), 16+ (i%4), 10, -0.5, 0, 7); ctx.fill();
+  }
+  ctx.restore();
+  ctx.fillStyle=css("--surface-3"); ctx.strokeStyle=css("--border-strong");
+  const covered = progress>0.85 && k>0.6;
+  ctx.fillRect(house.x, house.y-house.hh, house.w, house.hh);
+  ctx.strokeRect(house.x, house.y-house.hh, house.w, house.hh);
+  if(covered){
+    ctx.fillStyle="rgba(120,72,38,0.55)";
+    ctx.fillRect(house.x-10, house.y-house.hh*0.55, house.w+20, house.hh*0.55+6);
+  }
+}
+
+function drawVolcanico(t,k){
+  const w=canvas.width, h=canvas.height, baseY=h*0.85, apexX=w*0.5, apexY=h*0.18;
+  ctx.fillStyle=css("--surface-3");
+  ctx.beginPath(); ctx.moveTo(apexX,apexY); ctx.lineTo(apexX-160,baseY); ctx.lineTo(apexX+160,baseY); ctx.closePath(); ctx.fill();
+  ctx.strokeStyle=css("--border-strong"); ctx.stroke();
+  const lavaLen = Math.min(t*40, 120*k+10);
+  [-1,1].forEach(dir => {
+    ctx.beginPath();
+    ctx.moveTo(apexX, apexY+10);
+    ctx.lineTo(apexX+dir*lavaLen*0.9, apexY + (baseY-apexY)*(lavaLen/160));
+    ctx.lineTo(apexX+dir*lavaLen*0.5, apexY + (baseY-apexY)*(lavaLen/160)+14);
+    ctx.closePath();
+    ctx.fillStyle="rgba(211,84,0,0.85)"; ctx.fill();
+  });
+  for(let i=0;i<18;i++){
+    const life = (t*0.5 + i*0.15) % 3;
+    const spread = life*40*(0.4+k);
+    const rise = life*70;
+    ctx.globalAlpha = Math.max(0,1-life/3) * (0.35+k*0.5);
+    ctx.fillStyle = i%2? css("--muted") : css("--ink-2");
+    ctx.beginPath();
+    ctx.ellipse(apexX + Math.sin(i)*spread, apexY-10-rise, 18+life*10, 12+life*8, 0,0,7);
+    ctx.fill();
+  }
+  ctx.globalAlpha=1;
+}
+
+const FIRE_COLS=40, FIRE_ROWS=16;
+let fireGrid = null;
+function initFireGrid(){
+  fireGrid = Array.from({length:FIRE_ROWS}, () => Array.from({length:FIRE_COLS}, () => 0));
+  for(let r=0;r<FIRE_ROWS;r++) fireGrid[r][0] = 1;
+}
+function stepFire(k){
+  const p = 0.10 + k*0.22;
+  const next = fireGrid.map(row => row.slice());
+  for(let r=0;r<FIRE_ROWS;r++){
+    for(let c=0;c<FIRE_COLS;c++){
+      if(fireGrid[r][c]===1 && Math.random()<0.15) next[r][c]=2;
+      if(fireGrid[r][c]===1){
+        [[0,1],[1,0],[-1,0],[0,-1]].forEach(([dr,dc]) => {
+          const rr=r+dr, cc=c+dc;
+          if(rr>=0&&rr<FIRE_ROWS&&cc>=0&&cc<FIRE_COLS&&fireGrid[rr][cc]===0&&Math.random()<p) next[rr][cc]=1;
+        });
+      }
+    }
+  }
+  fireGrid = next;
+}
+let fireAcc=0;
+function drawIncendio(t,k,dt){
+  if(!fireGrid) initFireGrid();
+  fireAcc += dt;
+  if(fireAcc>0.12){ stepFire(k); fireAcc=0; }
+  const w=canvas.width, h=canvas.height, cw=w/FIRE_COLS, ch=h/FIRE_ROWS;
+  for(let r=0;r<FIRE_ROWS;r++){
+    for(let c=0;c<FIRE_COLS;c++){
+      const v=fireGrid[r][c];
+      ctx.fillStyle = v===0 ? "#3a5a34" : v===1 ? (Math.random()<0.5?"#e2711d":"#f2a33c") : "#3a3a38";
+      ctx.fillRect(c*cw, r*ch, cw-1, ch-1);
+    }
+  }
+}
+
+function drawStaticFor(hazard){
+  clearCanvas();
+  const k = intensityOf();
+  if(hazard==="sismo") drawSismo(0,k);
+  else if(hazard==="inundacion") drawInundacion(0,k);
+  else if(hazard==="deslizamiento") drawDeslizamiento(0,k);
+  else if(hazard==="volcanico") drawVolcanico(0,k);
+  else { initFireGrid(); drawIncendio(0,k,0); }
+}
+
+let lastTs=null;
+function simLoop(ts){
+  if(lastTs===null) lastTs=ts;
+  const dt=(ts-lastTs)/1000;
+  lastTs=ts;
+  if(state.simPlaying){ state.simTime += dt; }
+  clearCanvas();
+  const k=intensityOf(), t=state.simTime;
+  if(state.hazard==="sismo") drawSismo(t,k);
+  else if(state.hazard==="inundacion") drawInundacion(t,k);
+  else if(state.hazard==="deslizamiento") drawDeslizamiento(t,k);
+  else if(state.hazard==="volcanico") drawVolcanico(t,k);
+  else drawIncendio(t,k,state.simPlaying?dt:0);
+  rafId = requestAnimationFrame(simLoop);
+}
+
+const SIM_CAPTIONS = {
+  sismo:"Ondas sísmicas concéntricas y oscilación de edificaciones, con amplitud proporcional al nivel de amenaza sísmica del departamento seleccionado.",
+  inundacion:"Ascenso progresivo del nivel de agua sobre una sección esquemática de terreno, con altura máxima proporcional al nivel de amenaza por inundación.",
+  deslizamiento:"Desplazamiento de masa de suelo ladera abajo hasta la zona de infraestructura, con velocidad y alcance proporcionales al nivel de amenaza por movimientos en masa.",
+  volcanico:"Emisión de columna de ceniza y avance de flujos de lava desde el cráter, con extensión proporcional al nivel de amenaza volcánica.",
+  incendio:"Propagación de un frente de fuego sobre una cobertura vegetal esquemática (autómata celular), con probabilidad de propagación proporcional al nivel de amenaza de incendio forestal.",
+};
+
+function updateSimUI(){
+  $("#simCaption").innerHTML = state.dept
+    ? `<b>${HAZARDS.find(h=>h.id===state.hazard).label} — ${state.dept.name}.</b> ${SIM_CAPTIONS[state.hazard]}`
+    : SIM_CAPTIONS[state.hazard];
+  $("#simNote").textContent = state.dept
+    ? `Nivel de amenaza usado: ${LEVELS[state.dept.hazards[state.hazard]].label} (intensidad ${(intensityOf()*100).toFixed(0)}%). Simulación ilustrativa, no un modelo físico validado.`
+    : "Seleccione un departamento para calibrar la simulación con su nivel de amenaza.";
+}
+
+function resetSim(){
+  state.simPlaying=false; state.simTime=0; lastTs=null;
+  $("#simPlay").textContent="▶ Reproducir";
+  if(state.hazard==="incendio") initFireGrid();
+  drawStaticFor(state.hazard);
+}
+
+$("#simPlay").addEventListener("click", () => {
+  state.simPlaying = !state.simPlaying;
+  $("#simPlay").textContent = state.simPlaying ? "⏸ Pausar" : "▶ Reproducir";
+});
+$("#simReset").addEventListener("click", resetSim);
+
+/* ======================================================================
+   Recomendaciones
+   ====================================================================== */
+const REC_PHASES = [["antes","Antes"],["durante","Durante"],["despues","Después"]];
+function renderRecTabs(){
+  const wrap = $("#recTabs");
+  wrap.innerHTML="";
+  REC_PHASES.forEach(([id,label]) => {
+    const b = el("button","rec-tab"+(state.recPhase===id?" active":""), label);
+    b.addEventListener("click", () => { state.recPhase=id; renderRecTabs(); renderRecList(); });
+    wrap.appendChild(b);
+  });
+}
+function renderRecList(){
+  const h = HAZARDS.find(x=>x.id===state.hazard);
+  $("#recTitle").textContent = `Recomendaciones — ${h.label}`;
+  const items = RECOMMENDATIONS[state.hazard][state.recPhase];
+  $("#recList").innerHTML = items.map((txt,i) => `<li><span class="num mono">${String(i+1).padStart(2,"0")}</span><span>${txt}</span></li>`).join("");
+}
+
+/* ======================================================================
+   Metodología y fuentes
+   ====================================================================== */
+function renderMethodology(){
+  $("#methText").textContent = "Cada departamento se codifica en cuatro niveles de amenaza (Bajo–Muy alto) para cinco fenómenos, a partir de la clasificación oficial más reciente disponible por fuente (zonificación sísmica del SGC, registros históricos de movimientos en masa e inundaciones de la UNGRD, alertas de incendio de cobertura vegetal del IDEAM y monitoreo volcánico del SGC). La vulnerabilidad social se aproxima con el mismo esquema de niveles a partir del Índice de Pobreza Multidimensional citado por el DNP. El índice compuesto y el índice de magnitud son agregaciones explícitas y ajustables de estos niveles, pensadas con fines educativos y de exploración — no sustituyen los mapas de amenaza oficiales ni los sistemas de alerta temprana de UNGRD, SGC o IDEAM.";
+  $("#methFormulas").innerHTML = `
+    <p><b>Índice compuesto (0–100):</b> <code>Σ (nivel_amenaza_i / 4 × peso_i) / Σ peso_i × 100</code>, con pesos ajustables por el usuario (por defecto, 20% cada una de las cinco amenazas).</p>
+    <p><b>Índice de magnitud predicha (0–100) — modelo AVE:</b> <code>0.648·(amenaza/4) + 0.230·(vulnerabilidad/4) + 0.122·(exposición/4)</code>, clasificado en Leve (&lt;35), Moderado (35–54), Severo (55–74) y Catastrófico (≥75).</p>
+    <p><b>Origen de los pesos (AHP):</b> matriz de comparación pareada de Saaty entre Amenaza, Vulnerabilidad y Exposición (A/V=3, A/E=5, V/E=2) → vector propio normalizado (0.648 / 0.230 / 0.122) con razón de consistencia CR≈0.003.</p>
+    <p>Escala de niveles: 1 = Bajo, 2 = Medio, 3 = Alto, 4 = Muy alto. La exposición poblacional se deriva de la población del departamento (cuartiles aproximados).</p>`;
+
+  $("#sourceList").innerHTML = SOURCES.map(s => `<li><a href="${s.u}" target="_blank" rel="noopener">${s.t}</a></li>`).join("");
+
+  renderArchitecture();
+  renderMLPanel();
+  renderDataTable();
+}
+
+/* ======================================================================
+   Arquitectura de la solución (transparencia técnica)
+   ====================================================================== */
+function renderArchitecture(){
+  const box = $("#archText");
+  if(!box) return;
+  box.innerHTML = `
+    <p><b>¿Usa modelos de IA entrenados?</b> Para los índices principales (compuesto de riesgo y magnitud predicha), no: son, deliberadamente, fórmulas lineales explícitas y auditables, no un modelo de aprendizaje automático de caja negra. La plataforma sí incluye un modelo de ML real y básico, pero acotado a una tarea exploratoria: un agrupamiento no supervisado (<b>K-Means</b>) que clasifica los 33 departamentos en cuatro «arquetipos de riesgo» a partir de sus 7 variables. Se ejecuta en su navegador, no predice nada por sí solo (no tiene «respuesta correcta» que aprender) y sus resultados —centroides y asignaciones— son completamente inspeccionables. Vea el panel «Modelo de aprendizaje automático» más abajo. No hay red neuronal ni modelo de lenguaje en ninguna parte de la plataforma.</p>
+    <p><b>¿Dónde estaría la IA "generativa"?</b> Únicamente en el módulo de simulación se contempló usar video generado por IA; se optó en cambio por animaciones paramétricas (canvas 2D) calculadas directamente de los niveles de amenaza, por trazabilidad y para evitar el riesgo de contenido sintético confundible con material real.</p>
+    <p><b>Arquitectura técnica:</b> aplicación web de una sola página (HTML + CSS + JavaScript), sin frameworks ni backend — todo el cálculo ocurre en el navegador del usuario. El "conjunto de datos" es un arreglo JavaScript embebido en el propio archivo (ver tabla más abajo), no una base de datos externa. La geometría del mapa es un GeoJSON real de los departamentos de Colombia, convertido a rutas SVG estáticas. No hay llamadas a servidores ni APIs externas: el archivo funciona incluso sin conexión a internet.</p>
+    <p><b>Camino hacia un modelo predictivo calibrado (trabajo futuro):</b> el artículo científico que acompaña este prototipo propone, como siguiente paso, calibrar el índice de magnitud con datos históricos de severidad mediante modelos estadísticos/aprendizaje automático supervisado que preserven la explicabilidad (p. ej., modelos aditivos generalizados o modelos de conjunto con explicaciones SHAP), en vez de los pesos AHP actuales.</p>`;
+}
+
+/* ======================================================================
+   Modelo de ML: panel de arquetipos de riesgo (K-Means)
+   ====================================================================== */
+function renderMLPanel(){
+  const box = $("#mlText");
+  if(!box) return;
+  const C = CLUSTERING;
+  const groups = C.labels.map((label, ci) => ({
+    ci, label,
+    members: DEPARTMENTS.filter(d => C.byDept[d.name]===ci).map(d=>d.name).sort((a,b)=>a.localeCompare(b,'es')),
+  }));
+  const elbowRow = C.elbow.map(e => `<span class="elbow-pt${e.k===C.k?' current':''}"><b>k=${e.k}</b> inercia ${e.inertia.toFixed(2)}</span>`).join("");
+  box.innerHTML = `
+    <p>A diferencia de los índices de riesgo y magnitud (fórmulas fijas), este panel usa un modelo de <b>aprendizaje automático no supervisado</b> (K-Means, k=4) sobre 7 variables normalizadas por departamento (las 5 amenazas, la vulnerabilidad social y la exposición poblacional). El algoritmo no recibe ninguna etiqueta de "riesgo alto/bajo": descubre por sí mismo grupos de departamentos con perfiles similares, midiendo distancia euclidiana entre sus vectores de variables. La inicialización es determinista (farthest-first traversal, sin números aleatorios), por lo que el resultado es exactamente reproducible.</p>
+    <p class="data-table-note" style="margin:4px 0 14px;">Selección de k por método del codo (inercia = suma de distancias² al centroide asignado; una caída pronunciada seguida de rendimientos decrecientes marca el codo): ${elbowRow}</p>
+    <div class="ml-clusters">
+      ${groups.map(g => `
+        <div class="ml-cluster-card">
+          <div class="ml-cluster-head">
+            <span class="dot" style="background:${CLUSTER_SWATCH[g.ci % CLUSTER_SWATCH.length].light}"></span>
+            <b>Arquetipo ${g.ci+1}</b><span class="muted-n">· ${g.members.length} departamentos</span>
+          </div>
+          <div class="ml-cluster-label">${g.label}</div>
+          <div class="ml-cluster-members">${g.members.join(", ")}</div>
+        </div>`).join("")}
+    </div>
+    <p class="data-table-note">Interpretación exploratoria, no una etiqueta oficial de riesgo: el arquetipo asignado a cada departamento aparece también en su ficha departamental («Arquetipo ML»). Con apenas 33 observaciones y variables ordinales tratadas como continuas, estos grupos deben leerse como una ayuda de comunicación, no como una segmentación estadísticamente robusta (ver limitaciones en el artículo).</p>`;
+}
+
+/* ======================================================================
+   Tabla de datos completa (transparencia de variables)
+   ====================================================================== */
+function renderDataTable(){
+  const box = $("#dataTableBox");
+  if(!box) return;
+  const rows = [...DEPARTMENTS].sort((a,b)=>a.name.localeCompare(b.name,'es'));
+  let html = `<div class="data-table-wrap"><table class="data-table">
+    <thead><tr>
+      <th>Departamento</th><th>Región</th><th>Población aprox.</th>
+      <th>Vulnerab.</th><th>Exposición</th>
+      <th>Sismo</th><th>Inund.</th><th>Desliz.</th><th>Volcán.</th><th>Incendio</th>
+      <th>Índice compuesto</th>
+    </tr></thead><tbody>`;
+  rows.forEach(d => {
+    const idx = compositeIndex(d);
+    html += `<tr>
+      <td class="dt-name">${d.name}</td><td>${d.region}</td><td class="mono">${fmtPop(d.population)}</td>
+      <td class="mono">${d.vulnerability}</td><td class="mono">${d.exposicion}</td>
+      <td class="mono">${d.hazards.sismo}</td><td class="mono">${d.hazards.inundacion}</td>
+      <td class="mono">${d.hazards.deslizamiento}</td><td class="mono">${d.hazards.volcanico}</td>
+      <td class="mono">${d.hazards.incendio}</td><td class="mono">${idx}</td>
+    </tr>`;
+  });
+  html += `</tbody></table></div>
+  <p class="data-table-note">Escala 1–4 (Bajo / Medio / Alto / Muy alto) para vulnerabilidad, exposición y las cinco amenazas. Este es el conjunto de datos completo que usa la plataforma — el mismo que alimenta el mapa, la ficha departamental y las simulaciones.</p>`;
+  box.innerHTML = html;
+}
+
+/* ======================================================================
+   Orquestación
+   ====================================================================== */
+function selectDept(name){
+  state.dept = DEPARTMENTS.find(d => d.name===name);
+  refreshAll();
+}
+
+function refreshAll(){
+  renderTabs();
+  renderMap();
+  renderDetail();
+  renderRecTabs();
+  renderRecList();
+  renderMagnitude();
+  updateSimUI();
+  resetSim();
+}
+
+renderMethodology();
+refreshAll();
+if(rafId===null) rafId = requestAnimationFrame(simLoop);
+
+/* Theme toggle: automático → claro → oscuro → automático */
+const THEME_SEQ = [null, "light", "dark"];
+const THEME_LABEL = {null:"Tema: automático", light:"Tema: claro", dark:"Tema: oscuro"};
+let themeIdx = 0;
+$("#themeToggle").addEventListener("click", () => {
+  themeIdx = (themeIdx+1) % THEME_SEQ.length;
+  const v = THEME_SEQ[themeIdx];
+  if(v) document.documentElement.setAttribute("data-theme", v);
+  else document.documentElement.removeAttribute("data-theme");
+  $("#themeToggle").textContent = THEME_LABEL[v];
+});
+</script>
+</div>
