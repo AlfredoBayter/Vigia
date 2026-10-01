@@ -1250,11 +1250,548 @@ function renderRecTabs(){
     wrap.appendChild(b);
   });
 }
+/* ======================================================================
+   VIGÍA COLOMBIA — Recomendaciones adaptativas
+   Las recomendaciones cambian según:
+     1) el tipo de amenaza seleccionada (pestaña),
+     2) el NIVEL de amenaza del departamento seleccionado (1–4),
+     3) el contexto local (región, registros históricos, volcanes cercanos),
+     4) la vulnerabilidad social y la exposición poblacional del departamento.
+   Orden mostrado: nivel → contexto local → social/exposición → medidas generales.
+   Basado en lineamientos públicos de UNGRD, SGC, IDEAM y Cruz Roja Colombiana.
+   ====================================================================== */
+
+/* ---------- Estilos (se inyectan solos, no hay que tocar el <style>) ---------- */
+(function injectRecStyles(){
+  const s = document.createElement("style");
+  s.textContent = `
+    .rec-banner{display:flex; flex-direction:column; gap:6px; padding:12px 14px; margin-bottom:14px;
+      background:var(--surface-2); border:1px solid var(--border); border-radius:10px;}
+    .rec-banner-top{display:flex; align-items:center; gap:10px; flex-wrap:wrap;}
+    .rec-banner-top b{font-family:var(--font-display); font-size:15px;}
+    .rec-banner p{margin:0; font-size:12.5px; color:var(--ink-2); line-height:1.5;}
+    .rec-chip{font-size:11px; color:var(--ink-2); background:var(--surface-3); padding:2px 9px;
+      border-radius:99px; border:1px solid var(--border);}
+    .rec-list li{align-items:flex-start;}
+    .rec-body{display:flex; flex-direction:column; gap:5px;}
+    .rec-tag{align-self:flex-start; font-size:10px; font-weight:700; text-transform:uppercase;
+      letter-spacing:.04em; padding:1px 8px; border-radius:99px; border:1px solid var(--border);}
+    .rec-tag-nivel{color:var(--accent); background:var(--accent-soft); border-color:transparent;}
+    .rec-tag-local{color:var(--accent-2); background:var(--accent-2-soft); border-color:transparent;}
+    .rec-tag-social{color:var(--ink-2); background:var(--surface-3);}
+    .rec-matrix{margin-top:16px;}
+    .rec-matrix-wrap{overflow-x:auto; border:1px solid var(--border); border-radius:10px; margin-top:10px;}
+    table.rec-table{border-collapse:collapse; width:100%; min-width:720px; font-size:12px;}
+    table.rec-table th, table.rec-table td{padding:9px 10px; border-bottom:1px solid var(--border);
+      vertical-align:top; text-align:left;}
+    table.rec-table thead th{background:var(--surface-2); position:sticky; top:0;}
+    table.rec-table tbody th{background:var(--surface-2); font-size:11px; text-transform:uppercase;
+      letter-spacing:.04em; color:var(--ink-2); white-space:nowrap;}
+    table.rec-table td ul{margin:0; padding-left:16px; display:flex; flex-direction:column; gap:5px;
+      color:var(--ink-2); line-height:1.45;}
+    table.rec-table .rec-col-sel{background:var(--accent-soft);}
+  `;
+  document.head.appendChild(s);
+})();
+
+/* ---------- Perfil de prioridad por nivel ---------- */
+const REC_NIVEL_PERFIL = {
+  1: {titulo:"Prioridad baja",   texto:"Amenaza baja no significa amenaza nula: basta con conciencia, información y preparación básica."},
+  2: {titulo:"Prioridad media",  texto:"Conviene pasar de la información a la prevención activa: revisar la vivienda, ensayar y mantener el entorno limpio."},
+  3: {titulo:"Prioridad alta",   texto:"Se recomienda reducir el riesgo con obras o ajustes, tener planes formales y participar en simulacros y en la gestión municipal."},
+  4: {titulo:"Prioridad máxima", texto:"Se recomienda preparación avanzada, coordinación con autoridades y respuesta inmediata ante la primera alerta."},
+};
+
+/* ---------- Recomendaciones: base (comunes) + adicionales por nivel ---------- */
+const RECS = {
+
+  /* ============================== SISMO ============================== */
+  sismo: {
+    base: {
+      antes: [
+        "Identifique los puntos más seguros y las rutas de evacuación de su vivienda, trabajo o colegio.",
+        "Fije muebles altos y objetos pesados; prepare un kit de emergencia (agua, linterna, radio, medicamentos y copias de documentos).",
+        "Acuerde con su familia un punto de encuentro externo y un contacto de emergencia fuera de la zona.",
+      ],
+      durante: [
+        "Agáchese, cúbrase bajo un mueble firme y sujétese hasta que cese el movimiento.",
+        "Aléjese de ventanas, espejos y objetos que puedan caer; no use ascensores ni corra.",
+        "Si está en la calle, busque un espacio abierto lejos de fachadas, postes y cables.",
+      ],
+      despues: [
+        "Verifique si hay heridos y preste primeros auxilios básicos; no mueva a personas con lesiones graves.",
+        "Inspeccione la vivienda antes de reingresar y revise gas y electricidad; si hay grietas grandes, no la habite.",
+        "Prepárese para réplicas y siga únicamente información oficial del SGC y la UNGRD.",
+      ],
+    },
+    nivel: {
+      1: {
+        antes: [
+          "Conozca la zonificación sísmica de su municipio en el SGC y mantenga un kit básico.",
+          "Si construye o remodela, cumpla igualmente la norma sismorresistente NSR-10.",
+        ],
+        durante: ["Aplique el mismo protocolo (agacharse, cubrirse, sujetarse): un sismo lejano también puede sentirse en su zona."],
+        despues: ["Verifique daños y siga los canales oficiales; unos daños no visibles no descartan problemas estructurales."],
+      },
+      2: {
+        antes: [
+          "Pida a un profesional una revisión de su vivienda, sobre todo si se construyó antes de 1998 o sin licencia.",
+          "Realice al menos un simulacro al año en el hogar, el colegio o el trabajo.",
+        ],
+        durante: ["En un piso alto no corra a las escaleras: protéjase y evacúe solo cuando cese el movimiento."],
+        despues: ["Revise cielos rasos, cubiertas, tanques elevados y muros divisorios por daños o desprendimientos."],
+      },
+      3: {
+        antes: [
+          "Refuerce estructuralmente edificaciones antiguas o con daños previos (muros, columnas, cubiertas pesadas) con asesoría profesional.",
+          "Realice simulacros al menos dos veces al año y mida cuánto tarda la evacuación.",
+          "Ubique los edificios esenciales (hospitales, colegios) y los puntos de albergue de su municipio.",
+        ],
+        durante: ["Protéjase primero y evacúe solo cuando cese el movimiento y la ruta esté despejada: muchas lesiones ocurren por caída de objetos al intentar salir durante el temblor."],
+        despues: [
+          "No reingrese a edificaciones averiadas sin el concepto de un ingeniero o del cuerpo de bomberos; las réplicas pueden colapsarlas.",
+          "Active su plan de reunificación familiar y use mensajes de texto en lugar de llamadas para no saturar la red.",
+        ],
+      },
+      4: {
+        antes: [
+          "Verifique el cumplimiento de la NSR-10 antes de comprar o arrendar y considere un seguro para la vivienda.",
+          "Participe en el plan municipal de gestión del riesgo y en los ejercicios de respuesta con organismos de socorro.",
+          "Prepare un kit para al menos 72 horas y un plan específico para personas mayores, niños y personas con movilidad reducida.",
+        ],
+        durante: [
+          "Prepárese para un sismo prolongado y para réplicas fuertes en las horas siguientes.",
+          "En edificaciones altas o con muchos ocupantes, proteja la cabeza y siga las indicaciones de los brigadistas.",
+        ],
+        despues: [
+          "Asuma que fallarán servicios (agua, luz, comunicaciones, vías) y use sus reservas de 72 horas.",
+          "Apoye a vecinos con movilidad reducida y coordine con el consejo municipal de gestión del riesgo.",
+        ],
+      },
+    },
+  },
+
+  /* ============================ INUNDACIÓN ============================ */
+  inundacion: {
+    base: {
+      antes: [
+        "Consulte si su vivienda está en zona inundable (IDEAM o autoridad municipal) y siga las alertas en temporada de lluvias.",
+        "Guarde documentos, medicamentos y el kit de emergencia en una bolsa impermeable y en un lugar alto.",
+        "Identifique rutas de evacuación hacia zonas altas y un punto de encuentro.",
+      ],
+      durante: [
+        "Evacúe de inmediato si las autoridades lo indican; no espere a que el agua suba.",
+        "No cruce corrientes a pie ni en vehículo, aunque parezcan poco profundas.",
+        "Corte la energía eléctrica si el agua está por ingresar y aléjese de ríos, quebradas y alcantarillas desbordadas.",
+      ],
+      despues: [
+        "No regrese hasta que las autoridades confirmen que es seguro.",
+        "Evite el contacto con agua estancada; hierva o desinfecte el agua de consumo.",
+        "Revise la instalación eléctrica antes de reconectarla y documente los daños con fotografías.",
+      ],
+    },
+    nivel: {
+      1: {
+        antes: ["Mantenga limpios sifones, canales y desagües cerca de su vivienda: una lluvia extrema puede causar encharcamientos locales."],
+        durante: ["Evite zonas bajas y pasos subterráneos durante aguaceros intensos."],
+        despues: ["Reporte encharcamientos u obstrucciones del drenaje a la alcaldía."],
+      },
+      2: {
+        antes: [
+          "Eleve tomas eléctricas, electrodomésticos y bienes de valor por encima del nivel de creciente más alto que recuerde su comunidad.",
+          "Participe en la limpieza periódica de cauces y alcantarillas de su barrio.",
+        ],
+        durante: ["Siga los boletines del IDEAM y los avisos del consejo municipal de gestión del riesgo."],
+        despues: ["Retire el lodo y ventile la vivienda para prevenir moho."],
+      },
+      3: {
+        antes: [
+          "Adecúe la vivienda: pisos elevados, barreras o compuertas y almacenamiento en altura.",
+          "Acuerde un plan familiar con rutas alternas y prepare el traslado de mascotas, ganado y enseres.",
+          "Ubique los albergues temporales designados y cómo llegar a ellos.",
+        ],
+        durante: ["Evacúe de forma preventiva con las primeras alertas: una evacuación tardía aumenta mucho el riesgo."],
+        despues: [
+          "Pida una evaluación técnica antes de reocupar la vivienda; el suelo saturado puede ceder.",
+          "Vigile enfermedades asociadas (diarrea, dengue, leptospirosis) y acuda a salud ante síntomas.",
+        ],
+      },
+      4: {
+        antes: [
+          "Si la vivienda está en una zona de inundación recurrente, consulte con la alcaldía y la UNGRD opciones de reubicación o reasentamiento.",
+          "Mantenga un plan de evacuación probado con simulacros antes de cada temporada de lluvias.",
+          "Almacene agua potable, alimentos y combustible para varios días: las vías pueden quedar cortadas.",
+        ],
+        durante: [
+          "Evacúe al recibir la primera alerta, sin esperar la creciente, y lleve solo lo esencial.",
+          "Si el agua rodea la vivienda y no puede salir, suba al nivel más alto y comuníquese con la línea 123.",
+        ],
+        despues: [
+          "Permanezca en el albergue hasta recibir autorización: la inundación puede prolongarse semanas.",
+          "Solicite apoyo psicosocial y acompañamiento en los trámites de ayuda humanitaria.",
+        ],
+      },
+    },
+  },
+
+  /* ========================== DESLIZAMIENTO ========================== */
+  deslizamiento: {
+    base: {
+      antes: [
+        "Observe señales de alerta: grietas nuevas, árboles o postes inclinados, filtraciones de agua o ruidos del suelo.",
+        "Mantenga limpios los canales de drenaje y evite verter aguas sobre la ladera.",
+        "Defina con su familia una ruta de evacuación hacia terreno estable.",
+      ],
+      durante: [
+        "Aléjese de la ladera en dirección perpendicular al movimiento, nunca cuesta abajo en línea recta.",
+        "Si oye un ruido retumbante o ve movimiento de tierra, evacúe sin recoger pertenencias.",
+        "No cruce vías ni puentes que puedan estar afectados por lodo y escombros.",
+      ],
+      despues: [
+        "No ingrese a la zona hasta que un organismo técnico confirme que el terreno es estable.",
+        "Reporte el evento a la alcaldía o a la UNGRD.",
+        "Esté atento a nuevos movimientos: pueden reactivarse con lluvias posteriores.",
+      ],
+    },
+    nivel: {
+      1: {
+        antes: ["No haga cortes de talud sin autorización ni construya sobre rellenos sin compactar."],
+        durante: ["Con lluvias fuertes evite transitar por vías de ladera."],
+        despues: ["Informe grietas o derrumbes menores para evitar que escalen."],
+      },
+      2: {
+        antes: [
+          "Consulte los mapas de susceptibilidad por movimientos en masa del SGC para su municipio.",
+          "Proteja los taludes expuestos con vegetación adecuada y obras de drenaje sencillas.",
+        ],
+        durante: ["Evite permanecer en viviendas junto a taludes durante lluvias intensas y prolongadas."],
+        despues: ["Revise taludes y cunetas después de cada evento fuerte de lluvia."],
+      },
+      3: {
+        antes: [
+          "Pida estudios geotécnicos o consulte a planeación municipal antes de construir, ampliar o excavar.",
+          "Construya obras de drenaje y contención (cunetas, muros) con asesoría técnica.",
+          "Conozca el sistema de alerta temprana y los avisos comunitarios de su municipio.",
+        ],
+        durante: ["Evacúe de forma preventiva cuando haya varios días de lluvia acumulada y señales en el terreno; no espere al deslizamiento."],
+        despues: [
+          "Solicite a la alcaldía una evaluación de riesgo de su vivienda y de las vecinas.",
+          "Evite regresar de noche: la inestabilidad es difícil de ver sin luz.",
+        ],
+      },
+      4: {
+        antes: [
+          "Si su vivienda está en una zona de riesgo no mitigable, gestione la reubicación con la alcaldía y la UNGRD.",
+          "Organice con su comunidad la vigilancia de laderas: registro de lluvia, grietas y señales de alerta.",
+          "En temporada de lluvias, tenga lista una mochila de evacuación y un sitio de resguardo acordado.",
+        ],
+        durante: [
+          "Evacúe de inmediato ante alertas rojas o lluvias extremas, incluso de noche: los flujos pueden ser súbitos.",
+          "No intente rescatar a personas atrapadas en el flujo; llame al 123 y active a los organismos de socorro.",
+        ],
+        despues: [
+          "Asuma que habrá nuevos deslizamientos: permanezca en un albergue o sitio seguro hasta contar con concepto técnico.",
+          "Gestione apoyo psicosocial y alternativas de vivienda definitiva.",
+        ],
+      },
+    },
+  },
+
+  /* ============================== VOLCÁNICO ============================== */
+  volcanico: {
+    base: {
+      antes: [
+        "Conozca el nivel de actividad del volcán más cercano en los boletines del Servicio Geológico Colombiano (SGC).",
+        "Tenga mascarillas (N95) o paños, gafas y un kit de emergencia.",
+        "Conozca la ruta de evacuación oficial y los puntos de encuentro definidos para su municipio.",
+      ],
+      durante: [
+        "Siga de inmediato las órdenes de evacuación de las autoridades y del SGC.",
+        "Con caída de ceniza use mascarilla o paño húmedo, proteja los ojos y evite conducir.",
+        "Aléjese de los cauces de ríos que nacen en el volcán por el riesgo de lahares.",
+      ],
+      despues: [
+        "Espere el reporte oficial del SGC antes de regresar a las zonas evacuadas.",
+        "Retire con cuidado la ceniza de los techos (su peso puede colapsarlos) y use protección respiratoria.",
+        "No consuma agua ni alimentos expuestos a ceniza sin verificarlos y esté atento a lahares secundarios si llueve.",
+      ],
+    },
+    nivel: {
+      1: {
+        antes: ["Su zona no tiene un volcán activo cercano, pero la ceniza puede viajar con el viento: infórmese si hay actividad en departamentos vecinos."],
+        durante: ["Si cae ceniza, permanezca en interiores con puertas y ventanas cerradas."],
+        despues: ["Limpie las superficies con paño húmedo; no barra en seco."],
+      },
+      2: {
+        antes: ["Ubique los volcanes activos más cercanos y revise si su municipio está en zona de influencia por ceniza."],
+        durante: ["Cubra tanques de agua y proteja los alimentos mientras haya caída de ceniza."],
+        despues: ["Limpie filtros de vehículos y evite conducir hasta despejar parabrisas y ventilación."],
+      },
+      3: {
+        antes: [
+          "Identifique si su vivienda está en zona de amenaza alta por flujos piroclásticos, lahares o ceniza (mapa de amenaza del SGC).",
+          "Participe en los simulacros de evacuación del plan municipal.",
+          "Proteja las fuentes de agua y el almacenamiento de alimentos.",
+        ],
+        durante: ["Esté listo para evacuar cuando suba el nivel de actividad (amarillo o naranja) y evacúe cuando las autoridades lo ordenen."],
+        despues: [
+          "Mantenga el kit y el plan activos: un proceso eruptivo puede tener nuevas fases.",
+          "Revise techos, canaletas y ventilación después de cada evento de ceniza.",
+        ],
+      },
+      4: {
+        antes: [
+          "Mantenga todo listo para evacuar en minutos: mochila, documentos, medicinas, animales y vehículo con combustible.",
+          "Conozca los albergues y puntos de reunión y practique la ruta al menos una vez al año.",
+          "Si vive cerca de cauces que nacen en el volcán, conozca las alertas de lahares de su municipio.",
+        ],
+        durante: [
+          "Evacúe de inmediato ante alerta naranja o roja o por orden oficial, sin regresar por pertenencias.",
+          "Use solo las rutas oficiales y no cruce cauces ni puentes en zonas de lahares.",
+        ],
+        despues: [
+          "No regrese hasta contar con autorización oficial: la actividad puede prolongarse meses y reiniciar.",
+          "Gestione el alojamiento temporal y el apoyo psicosocial con las autoridades locales.",
+        ],
+      },
+    },
+  },
+
+  /* ========================== INCENDIO FORESTAL ========================== */
+  incendio: {
+    base: {
+      antes: [
+        "Evite quemas agrícolas o de basuras, sobre todo en temporada seca o con alertas del IDEAM.",
+        "Mantenga una franja libre de vegetación seca alrededor de la vivienda.",
+        "Conozca las rutas de evacuación y tenga a mano baldes, palas y los números de emergencia (119 bomberos, 123).",
+      ],
+      durante: [
+        "Evacúe en dirección contraria al viento y al avance del fuego; no huya cuesta arriba si el fuego está por debajo, porque sube más rápido que una persona.",
+        "Cubra nariz y boca con un paño húmedo para reducir la inhalación de humo.",
+        "No intente combatir un incendio grande: priorice la evacuación y llame al 119 o al 123.",
+      ],
+      despues: [
+        "No regrese hasta que los organismos de socorro lo autoricen.",
+        "Verifique focos residuales o brasas que puedan reavivarse con el viento.",
+        "Reporte daños a la UNGRD y a la autoridad ambiental regional; use protección respiratoria en la limpieza.",
+      ],
+    },
+    nivel: {
+      1: {
+        antes: ["No arroje colillas ni vidrios ni haga fogatas fuera de sitios autorizados."],
+        durante: ["Reporte cualquier foco de humo al 119 o al 123."],
+        despues: ["Apoye la restauración de la cobertura con especies nativas."],
+      },
+      2: {
+        antes: ["Limpie periódicamente pastos secos, hojarasca y escombros cerca de la vivienda y de las cercas."],
+        durante: ["Mantenga ventanas cerradas si hay humo y proteja a personas con problemas respiratorios."],
+        despues: ["Revise la calidad del aire antes de reanudar actividades al aire libre."],
+      },
+      3: {
+        antes: [
+          "Establezca cortafuegos y barreras en fincas y parcelas, con apoyo de bomberos o de la autoridad ambiental.",
+          "Participe en brigadas comunitarias o escolares de prevención.",
+          "Tenga un plan de evacuación para animales y reservas de agua para la primera respuesta.",
+        ],
+        durante: ["Evacúe temprano al ver avance de fuego o humo denso: con viento fuerte el frente cambia rápido."],
+        despues: [
+          "Vigile posibles reigniciones durante varios días y mantenga agua disponible.",
+          "Tras un incendio aumenta el riesgo de erosión y deslizamientos con las lluvias: evalúe el suelo y las laderas quemadas.",
+        ],
+      },
+      4: {
+        antes: [
+          "Aplique manejo de combustible vegetal (podas y retiro de material seco) antes de cada temporada seca.",
+          "Coordine con bomberos y la autoridad ambiental un plan de respuesta y puntos de agua para su vereda o barrio.",
+          "Prepare un kit con mascarillas, gafas y ropa de algodón, y tenga el vehículo listo para salir.",
+        ],
+        durante: [
+          "Evacúe sin dudar ante la primera orden: el humo y las llamas pueden bloquear rutas rápidamente.",
+          "Si queda atrapado, busque una zona sin vegetación (camino, río o terreno despejado) y llame al 123.",
+        ],
+        despues: [
+          "Permanezca fuera hasta la evaluación de bomberos: pueden quedar árboles inestables y brasas bajo la superficie.",
+          "Gestione con la autoridad ambiental la restauración y el acompañamiento a las personas afectadas.",
+        ],
+      },
+    },
+  },
+};
+
+/* ---------- Contexto local (región, registros históricos, volcanes) ---------- */
+const VOLCANES_REF = {
+  "Nariño":    "Galeras, Azufral, Cumbal y Doña Juana",
+  "Caldas":    "Nevado del Ruiz",
+  "Tolima":    "Nevado del Ruiz, Nevado del Tolima y Cerro Machín",
+  "Risaralda": "Nevado del Ruiz y Nevado de Santa Isabel",
+  "Cauca":     "Puracé y Sotará",
+  "Huila":     "Nevado del Huila",
+};
+const DEPTS_MOJANA = ["Bolívar","Sucre","Córdoba","Magdalena"];
+const REC_PHASE_IDS = ["antes","durante","despues"];
+
+function recEmptyPhases(){ return {antes:[], durante:[], despues:[]}; }
+
+const REC_CONTEXT = {
+  sismo(d, lvl){
+    const o = recEmptyPhases();
+    if(d.region === "Pacífica" && lvl >= 3){
+      o.durante.push("Si se encuentra en la costa Pacífica y el sismo es fuerte o prolongado, evacúe de inmediato a una zona alta sin esperar una alerta oficial (posible tsunami).");
+      o.antes.push("En la costa Pacífica, identifique la ruta de evacuación vertical u horizontal hacia zona alta y practíquela.");
+    }
+    return o;
+  },
+  inundacion(d, lvl){
+    const o = recEmptyPhases();
+    if(DEPTS_MOJANA.includes(d.name) && lvl >= 2){
+      o.antes.push("En la depresión momposina y La Mojana las crecientes de los ríos Magdalena, Cauca y San Jorge son recurrentes: tenga previsto un refugio en zona alta para familia, animales y enseres.");
+    }
+    if(d.name === "Atlántico" && lvl >= 2){
+      o.durante.push("En zonas urbanas los arroyos pueden crecer en minutos tras lluvias fuertes: no los cruce, no se detenga en sus cauces ni estacione el vehículo en ellos.");
+    }
+    if(d.region === "Orinoquía" && lvl >= 3){
+      o.antes.push("En las llanuras del Orinoco las crecientes son lentas pero prolongadas: planifique con anticipación el traslado de ganado, semillas y documentos.");
+    }
+    if(d.region === "Pacífica" && lvl >= 3){
+      o.antes.push("En ríos de alta pluviosidad las crecidas pueden ser súbitas: mantenga embarcación, chalecos y rutas fluviales de evacuación acordadas con la comunidad.");
+    }
+    if(d.region === "Andina" && lvl >= 3){
+      o.durante.push("Ante lluvias intensas aguas arriba, aléjese de quebradas y cauces aunque en su zona no esté lloviendo: pueden darse avenidas torrenciales.");
+    }
+    return o;
+  },
+  deslizamiento(d, lvl){
+    const o = recEmptyPhases();
+    const n = (typeof LANDSLIDE_COUNTS !== "undefined") ? LANDSLIDE_COUNTS[d.name] : null;
+    if(n){
+      o.antes.push(`La UNGRD registra ${n.toLocaleString("es-CO")} eventos históricos de movimientos en masa en ${d.name}: consulte con su alcaldía cuáles sectores han sido afectados.`);
+    }
+    if((d.region === "Andina" || d.region === "Pacífica") && lvl >= 3){
+      o.durante.push("La saturación del suelo tras varios días de lluvia es el detonante más frecuente: esté atento a las alertas del IDEAM y el SGC y evite las laderas en esos periodos.");
+    }
+    return o;
+  },
+  volcanico(d, lvl){
+    const o = recEmptyPhases();
+    if(lvl >= 2){
+      const v = VOLCANES_REF[d.name];
+      o.antes.push(v
+        ? `Volcanes de referencia para ${d.name}: ${v}. Verifique su zona de amenaza en el mapa oficial del SGC.`
+        : `Consulte en el SGC qué volcán puede influir en ${d.name} y su zona de amenaza.`);
+    }
+    return o;
+  },
+  incendio(d, lvl){
+    const o = recEmptyPhases();
+    if(d.region === "Orinoquía" && lvl >= 3){
+      o.antes.push("En sabanas y llanuras las quemas para renovar pastos son una causa frecuente de incendios: evítelas y concerte alternativas con la autoridad ambiental.");
+    }
+    if((d.region === "Caribe" || d.region === "Andina") && lvl >= 3){
+      o.antes.push("Extreme precauciones en temporadas secas y bajo el fenómeno de El Niño, cuando la vegetación se seca y el fuego se propaga con mayor facilidad.");
+    }
+    return o;
+  },
+};
+
+/* ---------- Ajustes por vulnerabilidad social y exposición poblacional ---------- */
+function recSocialAddons(d){
+  const o = recEmptyPhases();
+  if(d.vulnerability >= 3){
+    o.antes.push("Fortalezca las redes comunitarias (juntas de acción comunal, comités barriales) y acuerde con sus vecinos quién apoya a quién, sobre todo a personas mayores, niños y personas con discapacidad.");
+    o.antes.push("Pida al consejo municipal de gestión del riesgo canales de alerta que funcionen con poca conectividad (radio comunitaria, perifoneo, campanas).");
+    o.durante.push("Priorice alertar y evacuar a quienes tienen menos recursos para trasladarse.");
+    o.despues.push("Regístrese en el censo de afectados que realiza la alcaldía (Registro Único de Damnificados, RUD) para acceder a las ayudas.");
+  }
+  if(d.exposicion >= 3){
+    o.antes.push("Con alta población expuesta, verifique con la alcaldía los planes de evacuación masiva, los albergues temporales y la capacidad de las vías de salida.");
+    o.durante.push("Evacúe de forma ordenada por rutas señalizadas, evite congestiones y no bloquee las vías de los organismos de socorro.");
+    o.despues.push("Use mensajes de texto en lugar de llamadas y esté atento a los avisos sobre albergues y servicios para no saturar las líneas de emergencia.");
+  }
+  return o;
+}
+
+/* ---------- Construcción de la lista personalizada ---------- */
+function buildRecs(hazardId, phase, dept){
+  const R = RECS[hazardId];
+  const items = [];
+  if(dept){
+    const lvl = dept.hazards[hazardId];
+    (R.nivel[lvl][phase] || []).forEach(t =>
+      items.push({t, tag:{k:"nivel", l:`Según nivel ${LEVELS[lvl].label.toLowerCase()}`}}));
+    (REC_CONTEXT[hazardId](dept, lvl)[phase] || []).forEach(t =>
+      items.push({t, tag:{k:"local", l:"Contexto local"}}));
+    (recSocialAddons(dept)[phase] || []).forEach(t =>
+      items.push({t, tag:{k:"social", l:"Vulnerabilidad / exposición"}}));
+  }
+  R.base[phase].forEach(t => items.push({t, tag:null}));
+  return items;
+}
+
+/* ---------- Render ---------- */
+function renderRecBanner(){
+  const tabs = $("#recTabs");
+  let banner = $("#recBanner");
+  if(!banner){
+    banner = el("div", "rec-banner");
+    banner.id = "recBanner";
+    tabs.parentElement.insertBefore(banner, tabs);
+  }
+  const h = HAZARDS.find(x => x.id === state.hazard);
+  if(!state.dept){
+    banner.innerHTML = `<p>Mostrando medidas generales para <b>${h.label.toLowerCase()}</b>. Seleccione un departamento en el mapa para personalizar las recomendaciones según su nivel de amenaza, su contexto local y su vulnerabilidad social.</p>`;
+    return;
+  }
+  const d = state.dept;
+  const lvl = d.hazards[state.hazard];
+  const P = REC_NIVEL_PERFIL[lvl];
+  banner.innerHTML = `
+    <div class="rec-banner-top">
+      <b>${d.name}</b>
+      <span class="badge lvl-${lvl}">Amenaza ${LEVELS[lvl].label}</span>
+      <span class="rec-chip">${P.titulo}</span>
+      ${d.vulnerability >= 3 ? `<span class="rec-chip">Vulnerabilidad social ${LEVELS[d.vulnerability].label.toLowerCase()}</span>` : ""}
+      ${d.exposicion >= 3 ? `<span class="rec-chip">Exposición poblacional ${LEVELS[d.exposicion].label.toLowerCase()}</span>` : ""}
+    </div>
+    <p>${P.texto}</p>`;
+}
+
+function renderRecMatrix(){
+  const body = $("#recPanel .panel-body");
+  let box = $("#recMatrix");
+  if(!box){
+    box = el("details", "method rec-matrix");
+    box.id = "recMatrix";
+    body.appendChild(box);
+  }
+  const wasOpen = box.open;
+  const sel = state.dept ? state.dept.hazards[state.hazard] : null;
+  const R = RECS[state.hazard];
+  const head = [1,2,3,4].map(l =>
+    `<th class="${sel===l ? "rec-col-sel" : ""}"><span class="badge lvl-${l}">${LEVELS[l].label}</span></th>`).join("");
+  const rows = REC_PHASES.map(([id, label]) =>
+    `<tr><th scope="row">${label}</th>${[1,2,3,4].map(l =>
+      `<td class="${sel===l ? "rec-col-sel" : ""}"><ul>${R.nivel[l][id].map(t => `<li>${t}</li>`).join("")}</ul></td>`
+    ).join("")}</tr>`).join("");
+  box.innerHTML = `
+    <summary>Ver tabla comparativa por nivel de amenaza</summary>
+    <div class="rec-matrix-wrap">
+      <table class="rec-table"><thead><tr><th></th>${head}</tr></thead><tbody>${rows}</tbody></table>
+    </div>
+    <p class="data-table-note">Medidas adicionales según el nivel de amenaza (se suman a las medidas generales). La columna resaltada corresponde al departamento seleccionado.</p>`;
+  box.open = wasOpen;
+}
+
 function renderRecList(){
-  const h = HAZARDS.find(x=>x.id===state.hazard);
-  $("#recTitle").textContent = `Recomendaciones — ${h.label}`;
-  const items = RECOMMENDATIONS[state.hazard][state.recPhase];
-  $("#recList").innerHTML = items.map((txt,i) => `<li><span class="num mono">${String(i+1).padStart(2,"0")}</span><span>${txt}</span></li>`).join("");
+  const h = HAZARDS.find(x => x.id === state.hazard);
+  $("#recTitle").textContent = `Recomendaciones — ${h.label}` + (state.dept ? ` · ${state.dept.name}` : "");
+  renderRecBanner();
+  const items = buildRecs(state.hazard, state.recPhase, state.dept);
+  $("#recList").innerHTML = items.map((it, i) =>
+    `<li><span class="num mono">${String(i+1).padStart(2,"0")}</span>` +
+    `<span class="rec-body"><span>${it.t}</span>` +
+    (it.tag ? `<span class="rec-tag rec-tag-${it.tag.k}">${it.tag.l}</span>` : "") +
+    `</span></li>`).join("");
+  renderRecMatrix();
 }
 
 /* ======================================================================
