@@ -166,12 +166,10 @@
   .panel-head .hint{font-size:12px; color:var(--muted);}
   .panel-body{padding:16px 18px 18px;}
 
-  /* legend */
   .legend{display:flex; gap:14px; flex-wrap:wrap; align-items:center; font-size:12px; color:var(--ink-2);}
   .legend .sw{display:inline-flex; align-items:center; gap:6px;}
   .legend .dot{width:10px; height:10px; border-radius:3px; display:inline-block;}
 
-  /* region map grid */
   .region-group{margin-bottom:16px;}
   .region-group:last-child{margin-bottom:0;}
   .region-title{
@@ -195,7 +193,6 @@
   .dept-tile .bar-fill{height:100%; border-radius:4px;}
   .dept-tile .lvl{font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em;}
 
-  /* detail panel */
   .dept-heading{display:flex; align-items:baseline; justify-content:space-between; gap:10px; flex-wrap:wrap;}
   .dept-heading h3{font-size:20px; font-weight:600;}
   .dept-heading .region-chip{
@@ -223,7 +220,6 @@
   .lvl-3{color:var(--serious); background:var(--serious-soft);}
   .lvl-4{color:var(--critical); background:var(--critical-soft);}
 
-  /* hazard bar chart */
   .hbar-chart{display:flex; flex-direction:column; gap:10px; margin-top:6px;}
   .hbar-row{display:grid; grid-template-columns:120px 1fr 74px; align-items:center; gap:10px;}
   .hbar-label{display:flex; align-items:center; gap:7px; font-size:12.5px; font-weight:600; color:var(--ink-2);}
@@ -232,13 +228,11 @@
   .hbar-fill{display:block; height:100%; border-radius:5px 2px 2px 5px; transition:width .4s ease;}
   .hbar-val{font-size:11.5px; font-weight:700; text-align:right; text-transform:uppercase; letter-spacing:.02em;}
 
-  /* weights */
   .weights{display:flex; flex-direction:column; gap:9px; margin-top:4px;}
   .weight-row{display:grid; grid-template-columns:110px 1fr 34px; align-items:center; gap:8px; font-size:12px; color:var(--ink-2);}
   .weight-row input[type=range]{width:100%; accent-color:var(--accent);}
   .weight-row .wv{font-family:var(--font-mono); text-align:right; font-size:11.5px;}
 
-  /* magnitude gauge */
   .gauge-wrap{display:flex; align-items:center; gap:16px; margin-top:10px;}
   .gauge{width:118px; height:66px; flex:none;}
   .gauge-readout .cls{font-family:var(--font-display); font-size:22px; font-weight:600;}
@@ -249,7 +243,6 @@
   details.method .m-body{font-size:12.5px; color:var(--ink-2); margin-top:8px; line-height:1.55;}
   details.method .m-body code{font-family:var(--font-mono); background:var(--surface-2); padding:1px 5px; border-radius:4px; font-size:11.5px;}
 
-  /* recommendations */
   .rec-tabs{display:flex; gap:6px; margin-bottom:12px;}
   .rec-tab{
     flex:1; padding:8px 10px; border-radius:8px; border:1px solid var(--border);
@@ -294,7 +287,6 @@
   .analog-card .h{display:flex; justify-content:space-between; font-size:12.5px; font-weight:700;}
   .analog-card .d{font-size:11.5px; color:var(--ink-2); margin-top:3px;}
 
-  /* methodology / sources */
   .meth-grid{display:grid; grid-template-columns:1.1fr .9fr; gap:20px; margin-top:20px;}
   @media (max-width:900px){.meth-grid{grid-template-columns:1fr;}}
   .meth-grid h3{font-size:15px; margin-bottom:8px;}
@@ -307,12 +299,10 @@
 
   footer.site{margin-top:30px; padding-top:18px; border-top:1px solid var(--border); font-size:11.5px; color:var(--muted); display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;}
 
-  /* arquitectura */
   #archText p{font-size:13px; color:var(--ink-2); line-height:1.6; margin:0 0 12px;}
   #archText p:last-child{margin-bottom:0;}
   #archText b{color:var(--ink);}
 
-  /* panel de ML (K-Means) */
   #mlText > p{font-size:13px; color:var(--ink-2); line-height:1.6; margin:0 0 12px;}
   #mlText b{color:var(--ink);}
   .elbow-pt{display:inline-block; font-size:11px; color:var(--muted); margin-right:12px; font-family:var(--font-mono);}
@@ -328,7 +318,6 @@
   .ml-cluster-label{font-size:12.5px; color:var(--ink-2); margin:5px 0 6px; font-style:italic;}
   .ml-cluster-members{font-size:11.5px; color:var(--muted); line-height:1.5;}
 
-  /* tabla de datos completa */
   .data-table-wrap{overflow-x:auto; border:1px solid var(--border); border-radius:10px;}
   table.data-table{border-collapse:collapse; width:100%; min-width:760px; font-size:12px;}
   table.data-table th{
@@ -341,7 +330,6 @@
   table.data-table tbody tr:hover{background:var(--surface-2);}
   .data-table-note{font-size:11.5px; color:var(--muted); margin:10px 2px 0;}
 
-  /* mapa real de Colombia (choropleth) */
   .geo-map-wrap{position:relative;}
   .geo-map-wrap svg{width:100%; height:auto; display:block;}
   .geo-path{stroke:var(--surface); stroke-width:1.1; cursor:pointer; transition:filter .12s ease, stroke-width .12s ease;}
@@ -488,14 +476,6 @@
 </div>
 
 <script>
-/* ======================================================================
-   VIGÍA COLOMBIA — dataset y lógica del prototipo
-   Los niveles por amenaza (1=Bajo .. 4=Muy alto) son una codificación
-   ilustrativa derivada de fuentes oficiales citadas en el panel de
-   metodología (SGC, UNGRD, IDEAM, DNP). No reemplazan un mapa de amenaza
-   oficial y se documentan como tales en el artículo que acompaña este
-   prototipo.
-   ====================================================================== */
 
 const LEVELS = {
   1: {label:"Bajo",     css:"lvl-1", color:"var(--good)"},
@@ -520,10 +500,8 @@ const HAZARDS = [
   {id:"incendio", label:"Incendio forestal", unit:"amenaza de incendio forestal", source:"IDEAM"},
 ];
 
-// population: miles de habitantes (orden de magnitud, DANE — proyecciones, valores redondeados con fines ilustrativos)
-// exposicion: nivel ordinal 1-4 derivado de la población del departamento (proxy de exposición poblacional, cuartiles aproximados)
 const DEPARTMENTS = [
-  // --- Caribe ---
+  
   {name:"Atlántico", region:"Caribe", population:2700, vulnerability:2, exposicion:3, hazards:{sismo:2, inundacion:4, deslizamiento:1, volcanico:1, incendio:1}},
   {name:"Bolívar", region:"Caribe", population:2200, vulnerability:3, exposicion:3, hazards:{sismo:2, inundacion:4, deslizamiento:1, volcanico:1, incendio:1}},
   {name:"Cesar", region:"Caribe", population:1100, vulnerability:3, exposicion:2, hazards:{sismo:2, inundacion:3, deslizamiento:1, volcanico:1, incendio:3}},
@@ -531,7 +509,7 @@ const DEPARTMENTS = [
   {name:"La Guajira", region:"Caribe", population:900, vulnerability:4, exposicion:2, hazards:{sismo:2, inundacion:3, deslizamiento:1, volcanico:1, incendio:3}},
   {name:"Magdalena", region:"Caribe", population:1300, vulnerability:3, exposicion:2, hazards:{sismo:2, inundacion:4, deslizamiento:1, volcanico:1, incendio:3}},
   {name:"Sucre", region:"Caribe", population:900, vulnerability:3, exposicion:2, hazards:{sismo:2, inundacion:4, deslizamiento:1, volcanico:1, incendio:1}},
-  // --- Andina ---
+
   {name:"Antioquia", region:"Andina", population:6700, vulnerability:1, exposicion:4, hazards:{sismo:3, inundacion:2, deslizamiento:4, volcanico:1, incendio:3}},
   {name:"Bogotá D.C.", region:"Andina", population:7800, vulnerability:1, exposicion:4, hazards:{sismo:3, inundacion:1, deslizamiento:1, volcanico:1, incendio:3}},
   {name:"Boyacá", region:"Andina", population:1200, vulnerability:2, exposicion:2, hazards:{sismo:3, inundacion:2, deslizamiento:3, volcanico:1, incendio:4}},
@@ -543,30 +521,29 @@ const DEPARTMENTS = [
   {name:"Risaralda", region:"Andina", population:950, vulnerability:1, exposicion:2, hazards:{sismo:4, inundacion:1, deslizamiento:3, volcanico:3, incendio:1}},
   {name:"Santander", region:"Andina", population:2300, vulnerability:1, exposicion:3, hazards:{sismo:4, inundacion:2, deslizamiento:3, volcanico:1, incendio:4}},
   {name:"Tolima", region:"Andina", population:1400, vulnerability:2, exposicion:3, hazards:{sismo:3, inundacion:2, deslizamiento:3, volcanico:4, incendio:3}},
-  // --- Pacífica ---
+
   {name:"Cauca", region:"Pacífica", population:1400, vulnerability:3, exposicion:3, hazards:{sismo:4, inundacion:3, deslizamiento:3, volcanico:3, incendio:1}},
   {name:"Chocó", region:"Pacífica", population:530, vulnerability:4, exposicion:1, hazards:{sismo:4, inundacion:4, deslizamiento:2, volcanico:1, incendio:1}},
   {name:"Nariño", region:"Pacífica", population:1800, vulnerability:3, exposicion:3, hazards:{sismo:4, inundacion:3, deslizamiento:4, volcanico:4, incendio:1}},
   {name:"Valle del Cauca", region:"Pacífica", population:4500, vulnerability:1, exposicion:4, hazards:{sismo:4, inundacion:3, deslizamiento:3, volcanico:1, incendio:1}},
-  // --- Orinoquía ---
+
   {name:"Arauca", region:"Orinoquía", population:260, vulnerability:3, exposicion:1, hazards:{sismo:1, inundacion:4, deslizamiento:1, volcanico:1, incendio:3}},
   {name:"Casanare", region:"Orinoquía", population:420, vulnerability:2, exposicion:1, hazards:{sismo:1, inundacion:4, deslizamiento:1, volcanico:1, incendio:3}},
   {name:"Meta", region:"Orinoquía", population:1000, vulnerability:2, exposicion:2, hazards:{sismo:1, inundacion:4, deslizamiento:1, volcanico:1, incendio:4}},
   {name:"Vichada", region:"Orinoquía", population:110, vulnerability:4, exposicion:1, hazards:{sismo:1, inundacion:1, deslizamiento:1, volcanico:1, incendio:3}},
-  // --- Amazonía ---
+
   {name:"Amazonas", region:"Amazonía", population:80, vulnerability:4, exposicion:1, hazards:{sismo:1, inundacion:1, deslizamiento:1, volcanico:1, incendio:1}},
   {name:"Caquetá", region:"Amazonía", population:400, vulnerability:3, exposicion:1, hazards:{sismo:2, inundacion:3, deslizamiento:2, volcanico:1, incendio:3}},
   {name:"Guainía", region:"Amazonía", population:50, vulnerability:4, exposicion:1, hazards:{sismo:1, inundacion:1, deslizamiento:1, volcanico:1, incendio:3}},
   {name:"Guaviare", region:"Amazonía", population:110, vulnerability:3, exposicion:1, hazards:{sismo:1, inundacion:3, deslizamiento:1, volcanico:1, incendio:3}},
   {name:"Putumayo", region:"Amazonía", population:350, vulnerability:3, exposicion:1, hazards:{sismo:2, inundacion:3, deslizamiento:2, volcanico:3, incendio:3}},
   {name:"Vaupés", region:"Amazonía", population:44, vulnerability:4, exposicion:1, hazards:{sismo:1, inundacion:1, deslizamiento:1, volcanico:1, incendio:3}},
-  // --- Insular ---
+
   {name:"San Andrés y Providencia", region:"Insular", population:80, vulnerability:1, exposicion:1, hazards:{sismo:1, inundacion:1, deslizamiento:1, volcanico:1, incendio:1}},
 ];
 
 const REGION_ORDER = ["Caribe","Andina","Pacífica","Orinoquía","Amazonía","Insular"];
 
-// Terremotos históricos reales de Colombia (para análogos de magnitud sísmica)
 const HISTORIC_QUAKES = [
   {date:"1875-05-18", mag:7.3, place:"Cúcuta, Norte de Santander"},
   {date:"1906-01-31", mag:8.8, place:"Frontera Colombia–Ecuador (Tumaco)"},
@@ -632,9 +609,6 @@ const COLOMBIA_GEO = {"width":760,"height":900,"paths":{"Cauca":"M140.517,528.02
 </script>
 
 <script>
-/* ======================================================================
-   Estado y utilidades
-   ====================================================================== */
 const state = {
   hazard: "sismo",
   dept: null,
@@ -657,14 +631,6 @@ function compositeIndex(dept){
   return Math.round((sum/totalW)*100);
 }
 
-// Pesos derivados con el Proceso Analítico Jerárquico (AHP, Saaty) sobre 3 criterios:
-// Amenaza (A), Vulnerabilidad (V), Exposición (E). Matriz de comparación pareada:
-//        A     V     E
-//   A    1     3     5
-//   V   1/3    1     2
-//   E   1/5   1/2    1
-// Vector propio (medias geométricas normalizadas): wA=0.648, wV=0.230, wE=0.122
-// Razón de consistencia CR ≈ 0.003 (<< 0.10) → matriz consistente.
 const AHP_WEIGHTS = {amenaza:0.648, vulnerabilidad:0.230, exposicion:0.122};
 
 function predictedMagnitude(dept, hazardId){
@@ -681,15 +647,6 @@ function predictedMagnitude(dept, hazardId){
   return {score, cls, key};
 }
 
-/* ======================================================================
-    Modelo de aprendizaje automático: agrupamiento no supervisado (K-Means)
-    Único componente de la plataforma que constituye un modelo de ML real
-    (no una fórmula de índice). Se ejecuta enteramente en el navegador sobre
-    las 33 unidades territoriales, usando 7 variables normalizadas por
-    departamento (5 niveles de amenaza + vulnerabilidad + exposición).
-    El objetivo es exploratorio: agrupar departamentos con perfiles de
-    riesgo similares en "arquetipos" interpretables, no predecir un valor.
-   ====================================================================== */
 const ML_DIMS = ["sismo","inundacion","deslizamiento","volcanico","incendio","vulnerability","exposicion"];
 const ML_DIM_LABELS = {
   sismo:"amenaza sísmica", inundacion:"amenaza de inundación", deslizamiento:"amenaza por deslizamiento",
@@ -708,8 +665,6 @@ function ml_vecOf(d){
 }
 function ml_dist(a,b){ let s=0; for(let i=0;i<a.length;i++) s+=(a[i]-b[i])**2; return Math.sqrt(s); }
 
-// K-Means determinista: inicialización por "farthest-first traversal" (sin
-// aleatoriedad) para que el resultado sea 100% reproducible y auditable.
 function kmeans(points, k, maxIter=100){
   let centroids = [points[0].slice()];
   while(centroids.length < k){
@@ -740,10 +695,6 @@ function kmeans(points, k, maxIter=100){
   return {assign, centroids, inertia};
 }
 
-// Etiqueta descriptiva automática: compara cada dimensión del centroide
-// contra la media global y reporta las 1-2 dimensiones que más se apartan
-// por encima de la media — así la etiqueta se deriva de los datos, no de
-// un nombre fijado a mano por clúster.
 function ml_labelFor(centroid, globalMean){
   const diffs = ML_DIMS.map((k,i) => ({k, d: centroid[i]-globalMean[i]}));
   diffs.sort((a,b) => b.d - a.d);
@@ -759,15 +710,12 @@ function computeClustering(depts, k=4){
   const labels = centroids.map(c => ml_labelFor(c, globalMean));
   const byDept = {};
   depts.forEach((d,i) => byDept[d.name] = assign[i]);
-  // Curva del codo (k=2..6) para justificar la elección de k, mostrada en el panel.
+
   const elbow = [2,3,4,5,6].map(kk => ({k:kk, inertia: kmeans(points, kk).inertia}));
   return {byDept, centroids, labels, inertia, elbow, k};
 }
 const CLUSTERING = computeClustering(DEPARTMENTS, 4);
 
-/* ======================================================================
-                          Tabs de amenaza
-   ====================================================================== */
 function renderTabs(){
   const nav = $("#hazardTabs");
   nav.innerHTML = "";
@@ -778,9 +726,6 @@ function renderTabs(){
   });
 }
 
-/* ======================================================================
-   Mapa real de Colombia (choropleth SVG, geometría oficial por departamento)
-   ====================================================================== */
 function renderMap(){
   const h = HAZARDS.find(x => x.id === state.hazard);
   $("#mapTitle").textContent = `Nivel de ${h.unit} por departamento`;
@@ -805,7 +750,6 @@ function renderMap(){
     svg += `<path class="geo-path${sel}" d="${pathD}" fill="${L.color}" data-name="${d.name}"><title>${d.name} — ${L.label}</title></path>`;
   });
 
-  // Inset: San Andrés y Providencia (fuera de escala geográfica real, recuadro aparte)
   const ins = G.inset;
   const sa = DEPARTMENTS.find(d => d.name === "San Andrés y Providencia");
   const saLvl = sa.hazards[state.hazard];
@@ -847,9 +791,6 @@ function hideMapTooltip(){
   if(tip) tip.style.opacity = "0";
 }
 
-/* ======================================================================
-   Panel de detalle departamental
-   ====================================================================== */
 function renderDetail(){
   const body = $("#detailBody");
   if(!state.dept){
@@ -927,9 +868,6 @@ function renderWeights(){
   });
 }
 
-/* ======================================================================
-   Predicción de magnitud + análogos históricos
-   ====================================================================== */
 function renderMagnitude(){
   const block = $("#magBlock");
   if(!state.dept){
@@ -1001,9 +939,6 @@ function renderAnalogs(d){
   }
 }
 
-/* ======================================================================
-   Simulación animada (canvas)
-   ====================================================================== */
 const canvas = document.getElementById("simCanvas");
 const ctx = canvas.getContext("2d");
 let rafId = null;
@@ -1237,9 +1172,6 @@ $("#simPlay").addEventListener("click", () => {
 });
 $("#simReset").addEventListener("click", resetSim);
 
-/* ======================================================================
-   Recomendaciones
-   ====================================================================== */
 const REC_PHASES = [["antes","Antes"],["durante","Durante"],["despues","Después"]];
 function renderRecTabs(){
   const wrap = $("#recTabs");
@@ -1250,18 +1182,7 @@ function renderRecTabs(){
     wrap.appendChild(b);
   });
 }
-/* ======================================================================
-   VIGÍA COLOMBIA — Recomendaciones adaptativas
-   Las recomendaciones cambian según:
-     1) el tipo de amenaza seleccionada (pestaña),
-     2) el NIVEL de amenaza del departamento seleccionado (1–4),
-     3) el contexto local (región, registros históricos, volcanes cercanos),
-     4) la vulnerabilidad social y la exposición poblacional del departamento.
-   Orden mostrado: nivel → contexto local → social/exposición → medidas generales.
-   Basado en lineamientos públicos de UNGRD, SGC, IDEAM y Cruz Roja Colombiana.
-   ====================================================================== */
 
-/* ---------- Estilos (se inyectan solos, no hay que tocar el <style>) ---------- */
 (function injectRecStyles(){
   const s = document.createElement("style");
   s.textContent = `
@@ -1294,7 +1215,6 @@ function renderRecTabs(){
   document.head.appendChild(s);
 })();
 
-/* ---------- Perfil de prioridad por nivel ---------- */
 const REC_NIVEL_PERFIL = {
   1: {titulo:"Prioridad baja",   texto:"Amenaza baja no significa amenaza nula: basta con conciencia, información y preparación básica."},
   2: {titulo:"Prioridad media",  texto:"Conviene pasar de la información a la prevención activa: revisar la vivienda, ensayar y mantener el entorno limpio."},
@@ -1302,10 +1222,8 @@ const REC_NIVEL_PERFIL = {
   4: {titulo:"Prioridad máxima", texto:"Se recomienda preparación avanzada, coordinación con autoridades y respuesta inmediata ante la primera alerta."},
 };
 
-/* ---------- Recomendaciones: base (comunes) + adicionales por nivel ---------- */
 const RECS = {
 
-  /* ============================== SISMO ============================== */
   sismo: {
     base: {
       antes: [
@@ -1371,7 +1289,6 @@ const RECS = {
     },
   },
 
-  /* ============================ INUNDACIÓN ============================ */
   inundacion: {
     base: {
       antes: [
@@ -1434,7 +1351,6 @@ const RECS = {
     },
   },
 
-  /* ========================== DESLIZAMIENTO ========================== */
   deslizamiento: {
     base: {
       antes: [
@@ -1497,7 +1413,6 @@ const RECS = {
     },
   },
 
-  /* ============================== VOLCÁNICO ============================== */
   volcanico: {
     base: {
       antes: [
@@ -1557,7 +1472,6 @@ const RECS = {
     },
   },
 
-  /* ========================== INCENDIO FORESTAL ========================== */
   incendio: {
     base: {
       antes: [
@@ -1618,7 +1532,6 @@ const RECS = {
   },
 };
 
-/* ---------- Contexto local (región, registros históricos, volcanes) ---------- */
 const VOLCANES_REF = {
   "Nariño":    "Galeras, Azufral, Cumbal y Doña Juana",
   "Caldas":    "Nevado del Ruiz",
@@ -1693,7 +1606,6 @@ const REC_CONTEXT = {
   },
 };
 
-/* ---------- Ajustes por vulnerabilidad social y exposición poblacional ---------- */
 function recSocialAddons(d){
   const o = recEmptyPhases();
   if(d.vulnerability >= 3){
@@ -1710,7 +1622,6 @@ function recSocialAddons(d){
   return o;
 }
 
-/* ---------- Construcción de la lista personalizada ---------- */
 function buildRecs(hazardId, phase, dept){
   const R = RECS[hazardId];
   const items = [];
@@ -1727,7 +1638,6 @@ function buildRecs(hazardId, phase, dept){
   return items;
 }
 
-/* ---------- Render ---------- */
 function renderRecBanner(){
   const tabs = $("#recTabs");
   let banner = $("#recBanner");
@@ -1794,9 +1704,6 @@ function renderRecList(){
   renderRecMatrix();
 }
 
-/* ======================================================================
-   Metodología y fuentes
-   ====================================================================== */
 function renderMethodology(){
   $("#methText").textContent = "Cada departamento se codifica en cuatro niveles de amenaza (Bajo–Muy alto) para cinco fenómenos, a partir de la clasificación oficial más reciente disponible por fuente (zonificación sísmica del SGC, registros históricos de movimientos en masa e inundaciones de la UNGRD, alertas de incendio de cobertura vegetal del IDEAM y monitoreo volcánico del SGC). La vulnerabilidad social se aproxima con el mismo esquema de niveles a partir del Índice de Pobreza Multidimensional citado por el DNP. El índice compuesto y el índice de magnitud son agregaciones explícitas y ajustables de estos niveles, pensadas con fines educativos y de exploración — no sustituyen los mapas de amenaza oficiales ni los sistemas de alerta temprana de UNGRD, SGC o IDEAM.";
   $("#methFormulas").innerHTML = `
@@ -1812,9 +1719,6 @@ function renderMethodology(){
   renderDataTable();
 }
 
-/* ======================================================================
-   Arquitectura de la solución (transparencia técnica)
-   ====================================================================== */
 function renderArchitecture(){
   const box = $("#archText");
   if(!box) return;
@@ -1825,9 +1729,6 @@ function renderArchitecture(){
     <p><b>Camino hacia un modelo predictivo calibrado (trabajo futuro):</b> el artículo científico que acompaña este prototipo propone, como siguiente paso, calibrar el índice de magnitud con datos históricos de severidad mediante modelos estadísticos/aprendizaje automático supervisado que preserven la explicabilidad (p. ej., modelos aditivos generalizados o modelos de conjunto con explicaciones SHAP), en vez de los pesos AHP actuales.</p>`;
 }
 
-/* ======================================================================
-   Modelo de ML: panel de arquetipos de riesgo (K-Means)
-   ====================================================================== */
 function renderMLPanel(){
   const box = $("#mlText");
   if(!box) return;
@@ -1854,9 +1755,6 @@ function renderMLPanel(){
     <p class="data-table-note">Interpretación exploratoria, no una etiqueta oficial de riesgo: el arquetipo asignado a cada departamento aparece también en su ficha departamental («Arquetipo ML»). Con apenas 33 observaciones y variables ordinales tratadas como continuas, estos grupos deben leerse como una ayuda de comunicación, no como una segmentación estadísticamente robusta (ver limitaciones en el artículo).</p>`;
 }
 
-/* ======================================================================
-   Tabla de datos completa (transparencia de variables)
-   ====================================================================== */
 function renderDataTable(){
   const box = $("#dataTableBox");
   if(!box) return;
@@ -1883,9 +1781,6 @@ function renderDataTable(){
   box.innerHTML = html;
 }
 
-/* ======================================================================
-   Orquestación
-   ====================================================================== */
 function selectDept(name){
   state.dept = DEPARTMENTS.find(d => d.name===name);
   refreshAll();
@@ -1906,7 +1801,6 @@ renderMethodology();
 refreshAll();
 if(rafId===null) rafId = requestAnimationFrame(simLoop);
 
-/* Theme toggle: automático → claro → oscuro → automático */
 const THEME_SEQ = [null, "light", "dark"];
 const THEME_LABEL = {null:"Tema: automático", light:"Tema: claro", dark:"Tema: oscuro"};
 let themeIdx = 0;
